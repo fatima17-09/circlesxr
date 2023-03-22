@@ -1,49 +1,375 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
 
-    <!-- Circles' head scripts [REQUIRED] -->
-    <circles-start-scripts/>
-        <!-- Physics script goes after the Circles' head scripts [IMPORTANT] 
-          
+<head>
+  <meta charset="utf-8">
+
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts />
+  <!-- Physics script goes after the Circles' head scripts [IMPORTANT] 
           
           
           add aframe-->
-        <script src="scripts/controlPanelInteractions.js"></script>
-        <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
-        
-   </head>
 
-    <body>
-      <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
-      <circles-start-ui/>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 
-        <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-     <a-scene circles_scene_properties>
-      <a-assets>
-        <!-- add your assets here -->
-       
-        <!-- Circles' built-in assets [REQUIRED] -->
-        <circles-assets/>
-      </a-assets>
-      <!-- avatar -->
-       <!--  NOT <circles-avatar/>, BUT RATHER -->
-       <circles-manager-avatar/>  
-       <a-entity environment="preset:yavapai"></a-entity>
+  <!--Scientist JS-->
+  <script src="scripts/changePlantTemp.js"></script>
+
+  <!--Mechanic JS-->
+  <script src="scripts/create-info.js"></script>
+  <script src="scripts/spinning-effect.js"></script>
+  <script src="scripts/buttons.js"></script>
+  <script src="scripts/connect-pipes.js"></script>
+  <script src="scripts/rocket-align-effect.js"></script>
+  <script src="scripts/task-completion-effect.js"></script>
+  
+  
+
+  <!-- 
+   
+    
+    
+    
+    Refrences for the audio files and 3D models
+    Close by Omar Safaa from <a href="https://thenounproject.com/browse/icons/term/close/" target="_blank" title="Close Icons">Noun Project</a>
+    interior model https://www.turbosquid.com/3d-models/scifi-modular-hallway-3d-1230665
+          -->
+
+</head>
+
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui />
+
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+
+
+
+      <!--Game Intro-->
+      <a-entity position="-0.05 0 -1">
+        <a-plane close-button id="textPanel" width="3" height="1.5" color="black" opacity="0.8">
+          <a-entity class="panel-text" text="value: Welcome to the Navet Navette spaceship!
+            Chose your role and start exploring.; align:center; width:2; color:white;"></a-entity>
+          <a-entity class="interactive close-button" position="1.3 0.6 0"
+            geometry="primitive:plane; width:0.3; height:0.3" material="color:red; opacity:0"
+            text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+        </a-plane>
+      </a-entity>
+    </a-entity>
+
+
+    <a-assets timeout="10000">
+      <!-- Mechanics Assets-->
+      <a-asset-item id="wireBoard" response-type="arraybuffer" src="assets/models/mechanic_panel.gltf"></a-asset-item>
+      <a-asset-item id="wireB1" response-type="arraybuffer" src="assets/models/wire_broken_1.glb"></a-asset-item>
+      <a-asset-item id="wireB2" response-type="arraybuffer" src="assets/models/wire_broken_2.gltf"></a-asset-item>
+      <a-asset-item id="wireB3" response-type="arraybuffer" src="assets/models/wire_broken_3.gltf"></a-asset-item>
+      <a-asset-item id="interior" response-type="arraybuffer" src="assets/models/hallway_modular.gltf"></a-asset-item>
+     
+
+      <!--  Astornaut Stuff -->
+
+      <a-asset-item id="astro_panel_model" response-type="arraybuffer"
+        src="assets/models/astronaut_panel.gltf"></a-asset-item>
+      <a-asset-item id="mech_panel_model"
+        src="assets/models/mechanic_panel.gltf"></a-asset-item>
+      <a-asset-item id="rocket_model"
+        src="assets/models/scene.gltf"></a-asset-item>
+      <!--source: https://sketchfab.com/motaman-->
+      <audio id="click_sound" src="assets/clickSound.mp3" preload="auto" crossorigin="anonymous"></audio>
+      <!--source: https://pixabay.com/sound-effects/search/clicks/-->
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets />
+    </a-assets>
+
+
+    <!-- avatar -->
+    <!--  NOT <circles-avatar/>, BUT RATHER -->
+    <circles-manager-avatar />
+
+    <a-entity circles-checkpoint circles-spawnpoint position="0 0 14"></a-entity>
+    <a-entity environment="preset:tron;"></a-entity>
     
 
-       <a-sphere color="#676767" position="-10 1.25 -2" radius="5.25"></a-sphere>
-       <a-box id="soil" class="interactive"color="#964B00" depth="2" height="0.5" width="2" position="-1 0.5 0" rotation="0 45 0" growPlantInteractions></a-box>
+    <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role" taskText="Good Job!You have Completed a task" ></a-entity>
 
-       
-        <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-       
 
-    </a-scene>
-    <!-- Circles' end scripts [REQUIRED] -->
-    <circles-end-scripts/>
-  </body>
+    <!--Environment-->
+    <a-entity position="1 0.03 1" scale="1 1 1" gltf-model="#interior"></a-entity>
+ 
+    <a-entity id="floor" geometry="primitive: plane; width: 6.96" position="-0.139 0.4 12.981" material="color: white"
+      rotation="-90 0 0"></a-entity>
+   
+
+    <!--Mechanic Space-->
+    <a-entity id="astronut-stuff" position="0.83 0 10.608">
+    
+      <a-entity position="4.55 0.03 -7.70" scale="0.6 0.6 0.6" gltf-model="#wireBoard"></a-entity>
+
+      <a-entity connect-pipes="brokenId:broken-01; fixedId: fixed-01" position="4.56 0.066 -7.756">
+        <a-entity id="broken-01" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB1"></a-entity>
+        <a-entity id="fixed-01" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_1.gltf" visible="false"
+          scale="0.6 0.6 0.6"></a-entity>
+      </a-entity>
+
+      <a-entity connect-pipes="brokenId:broken-02; fixedId: fixed-02" position="4.553 0.066 -7.756">
+        <a-entity id="broken-02" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB2"></a-entity>
+        <a-entity id="fixed-02" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_2.gltf" visible="false"
+          scale="0.6 0.6 0.6"></a-entity>
+      </a-entity>
+
+      <a-entity connect-pipes="brokenId:broken-03; fixedId:fixed-03" position="4.543 0.066 -7.756">
+        <a-entity id="broken-03" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB3"></a-entity>
+        <a-entity id="fixed-03" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_3.gltf" visible="false"
+          scale="0.6 0.6 0.6"></a-entity>
+      </a-entity>
+
+      <!-- Mechanic panel-->
+      <a-entity id="mechanicPanelText" position="6.37963 1.16445 -7.69992">
+        <a-entity geometry="primitive: plane; width: 2" material="color: black" opacity="0.9"></a-entity>
+        <a-entity class="panel-text" position="0 -0.025 0.107"
+          text="value: Please connect the broken wires together by clicking on it!; align: center; color: white; width: 1.6; wrapCount: 20"></a-entity>
+      </a-entity>
+ 
+</a-entity>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--Buttons-->
+
+    <a-entity id="all-buttons" position="-0.914 0 18.248">
+
+      <!-- Astronut button-->
+      <a-entity id="asB">
+        <a-entity class="button interactive" destroy-buttons="firstId: scB; secondId: mcB" position="0.05 0.6 -2.2"
+          hover="panelId: Aintro" showpanel="panelId: astronutPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(0, 0, 150); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(137, 207, 240); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:0.05 0.58 -2.2; to:0.05 0.6 -2.2; startEvents:click; dur:300"
+          shadow></a-entity>
+        <a-entity position="0.05 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <!-- Roles intro on hover-->
+        <a-entity id="Aintro" position="0 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Astronut Role!
+            ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+
+      <!-- Scientist button-->
+
+      <a-entity id="scB">
+        <a-entity class="button interactive" destroy-buttons="firstId: asB; secondId: mcB" position="1.8 0.6 -2.2"
+          hover="panelId: Sintro" showpanel="panelId: scientistPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255,0,0)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(128,0,0); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:1.8 0.58 -2.2; to:1.8 0.6 -2.2; startEvents:click; dur:300"
+          shadow></a-entity>
+        <a-entity position="1.8 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <a-entity id="Sintro" position="1.8 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Scientist Role!
+            ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+      <!-- Mechanic button-->
+      <a-entity id="mcB" visible="true">
+        <a-entity class="button3 interactive" destroy-buttons="firstId: asB; secondId: scB" position="3.55 0.6 -2.2"
+          hover="panelId: Mintro" showpanel="panelId: mechanicPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(147,112,219)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(138,43,226); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(147,112,219); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:3.55 0.58 -2.2; to:3.55 0.6 -2.2; startEvents:click; dur:300"
+          shadow></a-entity>
+        <a-entity position="3.55 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <a-entity id="Mintro" position="3.6 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Mechanic Role!
+              ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+      <!-- Astronut pannel-->
+      <a-entity id="asB">
+        <a-entity id="astronutPanel" position="-0.119 1.8 -2" visible="false">
+          <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+          <a-entity class="interactive close-button" position="0.874 0.37 0"
+            geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+            text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value:Our Captain! Nice to have you on board. Head to the Blue Panel and Complete your tasks.
+      ; align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+        </a-entity>
+      </a-entity>
+
+
+
+      <!-- Scientist pannel-->
+
+      <a-entity id="scientistPanel" position="1.9 1.8 -2" visible="false">
+        <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+        <a-entity class="interactive close-button" position="0.874 0.37 0"
+          geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+        <a-entity class="panel-text" position="0 -0.025 0.107"
+          text="value:Our genius scientist! Nice to see you here. Head to the Orange Panel and Complete your tasks!; align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+      </a-entity>
+
+
+      <!-- Mechanic pannel-->
+      <a-entity id="mechanicPanel" position="3.93 1.8 -2" visible="false">
+        <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+        <a-entity class="interactive close-button" position="0.874 0.37 0"
+          geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+        <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Our trusty mechanic! Nice to see you here. Head to the Purple panel and Complete your tasks!;
+       align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+      </a-entity>
+
+
+    </a-entity>
+    <!-- Astronut Stuff-->
+
+<!--
+    <a-entity id="astronut-stuff" position="0.83 0 10.608">
+      
+      <a-entity id="rocket" position="1 1.3 -8.695" rotation="0 0 0" scale="0.03 0.03 0.03" gltf-model="#rocket_model"
+        shadow></a-entity>
+
+      <a-entity id="universial_button_bunny">
+        <a-entity class="button interactive" position="-1 0.65 -8.695"
+          create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+          animation__click_bunny="property:position; to:-1 0.65 -8.695; from:-1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
+        <a-entity class="button interactive" spinning-effect="duration:3000;" position="1 0.65 -8.695"
+          sound="src: #click_sound; on: click" geometry="primitive:cylinder; radius:0.15; height:0.2;"
+          material="color:rgb(250,128,114);" shadow
+          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+          animation__click_bunny="property:position; to:1 0.65 -8.695; from:1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
+
+        <a-entity id="astro_panel" position="0 0 -8.695" rotation="0 180 0" scale="0.6 0.6 0.6"
+          gltf-model="assets/models/astronaut_panel.gltf"></a-entity>
+      </a-entity>
+
+    </a-entity>
+  -->
+
+    <a-entity id="astronut-stuff" position="0.83 0 10.608">
+      
+      <a-entity id="rocket" position="1 1.3 -8.695" rotation="0 0 75" scale="0.03 0.03 0.03" gltf-model="#rocket_model"
+        shadow></a-entity>
+
+      
+        <a-entity  id="rocket-button"class="button interactive" position="-1 0.65 -8.695"
+          create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+         
+
+
+
+          create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+          animation__click_bunny="property:position; to:-1 0.65 -8.695; from:-1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
+        <a-entity id="rocket-button" class="button interactive" 
+        rocket-align-effect rocketAngle="75"
+          
+        
+        position="1 0.65 -8.695"
+          sound="src: #click_sound; on: click" geometry="primitive:cylinder; radius:0.15; height:0.2;"
+          material="color:rgb(250,128,114);" shadow
+          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+          animation__click_bunny="property:position; to:1 0.65 -8.695; from:1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
+
+
+
+
+
+        <a-entity id="astro_panel" position="0 0 -8.695" rotation="0 180 0" scale="0.6 0.6 0.6"
+          gltf-model="assets/models/astronaut_panel.gltf"></a-entity>
+      </a-entity>
+
+    
+
+
+
+
+
+
+
+    <a-entity id="scientist-stuff" scale="0.45 0.45 0.45" position="-3.1 0 3.304" rotation="0 45 0">
+      <a-box id="table" color="orange" depth="2" height="1" width="4" position="-2.74104 0.62999 -0.68896"
+        rotation="0 45 0"></a-box>
+      <a-entity id="buttonsPlane" geometry="primitive: plane; height: 3.2" material="color:orange" opacity="0.9"
+        rotation="0 0.78 0" position="1.73 1.96 -2.074"></a-entity>
+      <a-entity id="plantTempTube" geometry="primitive: cylinder; height:4; radius:1" material="color:white"
+        position="0 1.5 -3.5" rCol="127" gCol="127" Temperature="0"></a-entity>
+      <a-entity id="plantTempInc" class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2"
+        material="color:green" rotation="90 0 0" position="1.65 2.5 -2" change-plant-temp></a-entity>
+      <a-entity id="plantTempDec" class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2"
+        material="color:red" rotation="90 0 0" position="1.65 1 -2" change-plant-temp></a-entity>
+      <a-text id="tempReading" value="0" color="white" position="1.65 2 -2"></a-text>
+      <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
+    </a-entity>
+
+
+
+
+
+
+    <!--
+    
+       <a-box id="table"  color="white" depth="2" height="1" width="4" position="-5 0.5 0" rotation="0 45 0" ></a-box>
+       <a-entity id="plantTempTube" geometry="primitive: cylinder; height:4; radius:1" material="color:white" position="0 1.5 -3.5" rCol="127" gCol="127" Temperature="0"></a-entity>
+      <a-entity id="plantTempInc"  class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2" color="blue"  rotation="90 0 0"position="1.65 2.5 -2" circles-interactive-object change-plant-temp></a-entity>
+       <a-entity id="plantTempDec" class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2" color="blue"  rotation="90 0 0"position="1.65 1 -2" circles-interactive-object change-plant-temp></a-entity>
+       <a-text id="tempReading" value= "100" color="white" position="1.65 2 -2"></a-text>
+        -->
+    <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
+
+
+  </a-scene>
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts />
+</body>
+
 </html>
 
 

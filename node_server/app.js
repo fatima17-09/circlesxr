@@ -67,7 +67,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "default-src":      ["'self'"],
-      "connect-src":      ["*", "'unsafe-inline'", "blob:"],
+      "connect-src":      ["*", "'unsafe-inline'", "blob:", "data:"],
       "img-src":          ["*", "blob:", "data:"],
       "media-src":        ["*"],
       "frame-src":        ["*"],
@@ -263,6 +263,33 @@ io.on("connection", socket => {
       }
     }
   });
+
+
+  socket.on('win', () =>{
+    console.log("I selected and will return: ") ;
+  
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 ///
 
