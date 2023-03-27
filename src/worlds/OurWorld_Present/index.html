@@ -23,8 +23,8 @@
   <script src="scripts/connect-pipes.js"></script>
   <script src="scripts/rocket-align-effect.js"></script>
   <script src="scripts/task-completion-effect.js"></script>
-  
-  
+
+
 
   <!-- 
    
@@ -47,16 +47,16 @@
 
 
 
-      <!--Game Intro-->
-      <a-entity position="-0.05 0 -1">
-        <a-plane close-button id="textPanel" width="3" height="1.5" color="black" opacity="0.8">
-          <a-entity class="panel-text" text="value: Welcome to the Navet Navette spaceship!
+    <!--Game Intro-->
+    <a-entity position="-0.05 0 -1">
+      <a-plane close-button id="textPanel" width="3" height="1.5" color="black" opacity="0.8">
+        <a-entity class="panel-text" text="value: Welcome to the Navet Navette spaceship!
             Chose your role and start exploring.; align:center; width:2; color:white;"></a-entity>
-          <a-entity class="interactive close-button" position="1.3 0.6 0"
-            geometry="primitive:plane; width:0.3; height:0.3" material="color:red; opacity:0"
-            text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
-        </a-plane>
-      </a-entity>
+        <a-entity class="interactive close-button" position="1.3 0.6 0"
+          geometry="primitive:plane; width:0.3; height:0.3" material="color:red; opacity:0"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+      </a-plane>
+    </a-entity>
     </a-entity>
 
 
@@ -67,16 +67,14 @@
       <a-asset-item id="wireB2" response-type="arraybuffer" src="assets/models/wire_broken_2.gltf"></a-asset-item>
       <a-asset-item id="wireB3" response-type="arraybuffer" src="assets/models/wire_broken_3.gltf"></a-asset-item>
       <a-asset-item id="interior" response-type="arraybuffer" src="assets/models/hallway_modular.gltf"></a-asset-item>
-     
+
 
       <!--  Astornaut Stuff -->
 
       <a-asset-item id="astro_panel_model" response-type="arraybuffer"
         src="assets/models/astronaut_panel.gltf"></a-asset-item>
-      <a-asset-item id="mech_panel_model"
-        src="assets/models/mechanic_panel.gltf"></a-asset-item>
-      <a-asset-item id="rocket_model"
-        src="assets/models/scene.gltf"></a-asset-item>
+      <a-asset-item id="mech_panel_model" src="assets/models/mechanic_panel.gltf"></a-asset-item>
+      <a-asset-item id="rocket_model" src="assets/models/scene.gltf"></a-asset-item>
       <!--source: https://sketchfab.com/motaman-->
       <audio id="click_sound" src="assets/clickSound.mp3" preload="auto" crossorigin="anonymous"></audio>
       <!--source: https://pixabay.com/sound-effects/search/clicks/-->
@@ -92,21 +90,22 @@
 
     <a-entity circles-checkpoint circles-spawnpoint position="0 0 14"></a-entity>
     <a-entity environment="preset:tron;"></a-entity>
-    
 
-    <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role" taskText="Good Job!You have Completed a task" ></a-entity>
+
+    <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role"
+      taskText="Good Job!You have Completed a task"></a-entity>
 
 
     <!--Environment-->
     <a-entity position="1 0.03 1" scale="1 1 1" gltf-model="#interior"></a-entity>
- 
+
     <a-entity id="floor" geometry="primitive: plane; width: 6.96" position="-0.139 0.4 12.981" material="color: white"
       rotation="-90 0 0"></a-entity>
-   
+
 
     <!--Mechanic Space-->
     <a-entity id="astronut-stuff" position="0.83 0 10.608">
-    
+
       <a-entity position="4.55 0.03 -7.70" scale="0.6 0.6 0.6" gltf-model="#wireBoard"></a-entity>
 
       <a-entity connect-pipes="brokenId:broken-01; fixedId: fixed-01" position="4.56 0.066 -7.756">
@@ -133,25 +132,8 @@
         <a-entity class="panel-text" position="0 -0.025 0.107"
           text="value: Please connect the broken wires together by clicking on it!; align: center; color: white; width: 1.6; wrapCount: 20"></a-entity>
       </a-entity>
- 
-</a-entity>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </a-entity>
 
 
 
@@ -160,7 +142,7 @@
     <a-entity id="all-buttons" position="-0.914 0 18.248">
 
       <!-- Astronut button-->
-      <a-entity id="asB">
+      <a-entity id="asB" class="roleButton">
         <a-entity class="button interactive" destroy-buttons="firstId: scB; secondId: mcB" position="0.05 0.6 -2.2"
           hover="panelId: Aintro" showpanel="panelId: astronutPanel"
           geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"
@@ -183,7 +165,7 @@
 
       <!-- Scientist button-->
 
-      <a-entity id="scB">
+      <a-entity id="scB" class="roleButton">
         <a-entity class="button interactive" destroy-buttons="firstId: asB; secondId: mcB" position="1.8 0.6 -2.2"
           hover="panelId: Sintro" showpanel="panelId: scientistPanel"
           geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255,0,0)"
@@ -203,7 +185,7 @@
       </a-entity>
 
       <!-- Mechanic button-->
-      <a-entity id="mcB" visible="true">
+      <a-entity id="mcB" class="roleButton">
         <a-entity class="button3 interactive" destroy-buttons="firstId: asB; secondId: scB" position="3.55 0.6 -2.2"
           hover="panelId: Mintro" showpanel="panelId: mechanicPanel"
           geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(147,112,219)"
@@ -262,7 +244,7 @@
     </a-entity>
     <!-- Astronut Stuff-->
 
-<!--
+    <!--
     <a-entity id="astronut-stuff" position="0.83 0 10.608">
       
       <a-entity id="rocket" position="1 1.3 -8.695" rotation="0 0 0" scale="0.03 0.03 0.03" gltf-model="#rocket_model"
@@ -290,47 +272,30 @@
   -->
 
     <a-entity id="astronut-stuff" position="0.83 0 10.608">
-      
+
       <a-entity id="rocket" position="1 1.3 -8.695" rotation="0 0 75" scale="0.03 0.03 0.03" gltf-model="#rocket_model"
         shadow></a-entity>
 
-      
-        <a-entity  id="rocket-button"class="button interactive" position="-1 0.65 -8.695"
-          create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
-          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
-         
+
+      <a-entity id="rocket-button" class="button interactive" position="-1 0.65 -8.695"
+        create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+        geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+        create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+        geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+        animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+        animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+        animation__click_bunny="property:position; to:-1 0.65 -8.695; from:-1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
+      <a-entity id="rocket-button" class="button interactive" rocket-align-effect rocketAngle="75"
+        position="1 0.65 -8.695" sound="src: #click_sound; on: click"
+        geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
+        animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
+        animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
+        animation__click_bunny="property:position; to:1 0.65 -8.695; from:1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
 
 
-
-          create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
-          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
-          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
-          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
-          animation__click_bunny="property:position; to:-1 0.65 -8.695; from:-1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
-        <a-entity id="rocket-button" class="button interactive" 
-        rocket-align-effect rocketAngle="75"
-          
-        
-        position="1 0.65 -8.695"
-          sound="src: #click_sound; on: click" geometry="primitive:cylinder; radius:0.15; height:0.2;"
-          material="color:rgb(250,128,114);" shadow
-          animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
-          animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
-          animation__click_bunny="property:position; to:1 0.65 -8.695; from:1 0.55 -8.695; startEvents:click; dur:300;"></a-entity>
-
-
-
-
-
-        <a-entity id="astro_panel" position="0 0 -8.695" rotation="0 180 0" scale="0.6 0.6 0.6"
-          gltf-model="assets/models/astronaut_panel.gltf"></a-entity>
-      </a-entity>
-
-    
-
-
-
-
+      <a-entity id="astro_panel" position="0 0 -8.695" rotation="0 180 0" scale="0.6 0.6 0.6"
+        gltf-model="assets/models/astronaut_panel.gltf"></a-entity>
+    </a-entity>
 
 
 
@@ -368,10 +333,33 @@
   </a-scene>
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts />
+  <script>
+    
+    const socket = io();
+
+    const playerId = socket.id;
+
+    const buttons = document.querySelectorAll('.roleButton');
+
+    //loop through the buttons and add a click event to each
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const buttonId = button.id;
+        socket.emit('buttonClicked', buttonId);
+        console.log(`Button ${buttonId} clicked`);
+      });
+    });
+
+    socket.on('destroyButton', (buttonId) => {
+      console.log(`Destroying button ${buttonId}`);
+      const button = document.getElementById(buttonId);
+      if (button) {
+        button.parentNode.removeChild(button);
+      }
+    });
+
+  </script>
 </body>
 
+
 </html>
-
-
-
- 
