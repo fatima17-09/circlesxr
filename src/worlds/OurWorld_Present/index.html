@@ -87,14 +87,73 @@
 
 
     <!-- avatar -->
-    <!--  NOT <circles-avatar/>, BUT RATHER -->
+    <!--  NOT <circles-avatar/
+      >, BUT RATHER -->
     <circles-manager-avatar />
 
     <a-entity circles-checkpoint circles-spawnpoint position="0 0 14"></a-entity>
     <a-entity environment="preset:tron;"></a-entity>
+    <a-entity laser-controls="hand:left" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
+    <a-entity laser-controls="hand:right" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
+
     
 
     <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role" taskText="Good Job!You have Completed a task" ></a-entity>
+
+
+
+
+
+    <a-entity id="Artefact-Product"
+    class="interactive"
+    position="-2.392 1.058 0.0" rotation="-90.0 35 0.0" scale="0.2 0.2 0.s2"
+    geometry="primitive: plane"
+    shadow="receive:true; cast:true;"
+    circles-artefact="inspectScale:0.1 0.1 0.1; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
+                      label_visible:true; label_offset:0.0 0.3 0.0; arrow_position:down;
+                      title: To Do List;
+                      description:Viola found it difficult to find beauty products for black women in Nova Scotia, so she started making and selling her own. This would include driving across the province in her car to make deliveries.;
+                      label_text:Beauty Product;"></a-entity>
+
+    <!-- checkpoints -->
+    <a-entity circles-checkpoint circles-spawnpoint position="0.6 0.05 1"> </a-entity>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!--Environment-->

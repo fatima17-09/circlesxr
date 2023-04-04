@@ -8,6 +8,7 @@ AFRAME.registerComponent('task-completion-effect', {
         
     this.el.addEventListener('win', function () {
     console.log('taskIncreased');
+    CSSLayerBlo
 
     
   });

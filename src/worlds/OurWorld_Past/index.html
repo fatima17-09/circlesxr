@@ -28,9 +28,20 @@
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
       </a-assets>
+
+
+
       <!-- avatar -->
        <!--  NOT <circles-avatar/>, BUT RATHER -->
        <circles-manager-avatar/>  
+
+
+       <a-entity circles-checkpoint circles-spawnpoint position="0 0 14"></a-entity>
+   
+       <a-entity laser-controls="hand:left" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
+       <a-entity laser-controls="hand:right" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
+   
+    
        <a-entity environment="preset:default"></a-entity>
        <a-entity id="pastScene" gltf-model="#pastScene-gltf" position="0 0 0" rotation="0 0 0" scale="0.08 0.08 0.08"></a-entity>
         <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
