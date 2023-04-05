@@ -339,10 +339,13 @@ io.on("connection", socket => {
   };
 
   //listen for all events and forward to all other clients
-  socket.on("*", function (event, data) {
+  socket.on("*", function(event, data) {
+    //console.log('socket event fired: ' + event);
+
     //ignore reserved event names
-    if (event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-      event === CIRCLES.EVENTS.SEND_DATA_SYNC) {
+    if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+          event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+          event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
       return; //exit
     }
 
