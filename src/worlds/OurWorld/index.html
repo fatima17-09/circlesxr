@@ -1,82 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
 
-    <!-- Circles' head scripts [REQUIRED] -->
-    <circles-start-scripts/>
-        <!-- Physics script goes after the Circles' head scripts [IMPORTANT] 
+<head>
+  <meta charset="utf-8">
+
+  <!-- Circles' head scripts [REQUIRED] -->
+  <circles-start-scripts />
+  <!-- Physics script goes after the Circles' head scripts [IMPORTANT] 
           
           
           
           add aframe-->
-        <script src="scripts/portalInteractions.js"></script>
-        <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
-    
+  <script src="scripts/portalInteractions.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 
-   </head>
 
-    <body>
-      <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
-      <circles-start-ui/>
+</head>
 
-        <!-- a-scene with 'circles-properties' component [REQUIRED] -->
-     <a-scene circles_scene_properties>
-      <a-assets>
-        <!-- add your assets here -->
-     
-       
-        <!-- Circles' built-in assets [REQUIRED] -->
-        <circles-assets/>
-      </a-assets>
-      <!-- avatar -->
-       <!--  NOT <circles-avatar/>, BUT RATHER -->
-       <circles-manager-avatar/>  
-    
-       <!--past-->
-       <a-entity environment="preset:forest"></a-entity>
-       
+<body>
+  <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
+  <circles-start-ui />
 
-       <a-entity rotation="0 25 0" position="-5 1.45 -3">
-         <a-entity id="past"  class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"  material="color:red" rotation="0 0 0" position="0 0 0"
-        circles-portal=" link_url:/w/OurWorld_Past"> </a-entity>
-        <a-text value=" Explore the past!" position="0 1.4 0" align="center"> </a-text>
+  <!-- a-scene with 'circles-properties' component [REQUIRED] -->
+  <a-scene circles_scene_properties>
+    <a-assets>
+      <!-- add your assets here -->
+
+
+      <!-- Circles' built-in assets [REQUIRED] -->
+      <circles-assets />
+    </a-assets>
+    <!-- avatar -->
+    <!--  NOT <circles-avatar/>, BUT RATHER -->
+    <circles-manager-avatar />
+
+
+    <a-entity environment="preset:forest"></a-entity>
+
+    <!--past-->
+    <a-entity rotation="0 25 0" position="-5 1.45 -3">
+      <a-entity id="past" class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"
+        material="color:red" rotation="0 0 0" position="0 0 0" circles-portal=" link_url:/w/OurWorld_Past"> </a-entity>
+      <a-text value=" Explore the past!" position="0 1.4 0"> </a-text>
+    </a-entity>
+
+
+
+
+    <!--present-->
+    <a-entity rotation="0 0 0" position="0 1.45 -3">
+      <a-entity id="present" class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"
+        material="color:yellow" rotation="0 0 0" position="0 0 0" circles-portal=" link_url:/w/OurWorld_Present">
       </a-entity>
+      <a-text value=" Explore the present!" position="0 1.4 0" anchor="center"> </a-text>
+    </a-entity>
 
 
 
-
-       <!--present-->
-     <!--
-       <a-entity geometry="primitive: plane; height:0.4; width:0.4; "  class="userAssginment interactive" id="captain" material="color:blue" rotation="0 0 0" position="-0.4 2.5 -3"></a-entity>
-       <a-entity geometry="primitive: box; height:2; width:1.4; depth:0.2"  class="userAssginmentinteractive" id="present" material="color:red" rotation="0 0 0" position="0 1.45 -3" portalInteractions="id:present"
-       circles-portal=" title_text:Click me to be teleported; link_url:/w/OurWorld_Present"></a-entity>
-    
-       -->
-       <a-entity rotation="0 0 0" position="0 1.45 -3">
-        <a-entity id="present"  class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"  material="color:yellow" rotation="0 0 0" position="0 0 0"
-        circles-portal=" link_url:/w/OurWorld_Present"> </a-entity>
-        <a-text value=" Explore the present!"  position="0 1.4 0" align="center" anchor="center"> </a-text>
-      </a-entity>
-       
-    
-    
-       <!--future-->
-       <a-entity rotation="0 -25 0" position="5.4 1.45 -3">
-      <a-entity id="future"  class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"  material="color:green" rotation="0 0 0" position="0 0 0"
+    <!--future-->
+    <a-entity rotation="0 -25 0" position="5.4 1.45 -3">
+      <a-entity id="future" class="portal interactive" geometry="primitive: box; height:2; width:1.4; depth:0.2"
+        material="color:green" rotation="0 0 0" position="0 0 0"
         circles-portal=" link_url:/w/OurWorld_Future"></a-entity>
-        <a-text value=" Explore the Future!" position="0 1.4 0" align="center"> </a-text>
-      </a-entity>
+      <a-text value=" Explore the Future!" position="0 1.4 0"> </a-text>
+    </a-entity>
 
-        <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-       
+    
 
-    </a-scene>
-    <!-- Circles' end scripts [REQUIRED] -->
-    <circles-end-scripts/>
-  </body>
+
+  </a-scene>
+  <!-- Circles' end scripts [REQUIRED] -->
+  <circles-end-scripts />
+</body>
+
 </html>
-
-
-
- 
