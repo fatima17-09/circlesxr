@@ -63,10 +63,13 @@
     <a-assets timeout="10000">
       <!-- Mechanics Assets-->
       <a-asset-item id="wireBoard" response-type="arraybuffer" src="assets/models/mechanic_panel.gltf"></a-asset-item>
-      <a-asset-item id="wireB1" response-type="arraybuffer" src="assets/models/wire_broken_1.glb"></a-asset-item>
+      <a-asset-item id="wireB1" response-type="arraybuffer" src="assets/models/wire_broken_1.gltf"></a-asset-item>
       <a-asset-item id="wireB2" response-type="arraybuffer" src="assets/models/wire_broken_2.gltf"></a-asset-item>
       <a-asset-item id="wireB3" response-type="arraybuffer" src="assets/models/wire_broken_3.gltf"></a-asset-item>
-      <a-asset-item id="interior" response-type="arraybuffer" src="assets/models/hallway_modular.gltf"></a-asset-item>
+      <a-asset-item id="interior" response-type="arraybuffer" src="assets/models/rocket_withGlass.gltf"></a-asset-item>
+      <a-asset-item id="plantTubeModel" response-type="arraybuffer"  src="assets/models/plantCylinder.gltf"></a-asset-item>
+      <a-asset-item id="plantPillowModel" response-type="arraybuffer"  src="assets/models/scientistpPlantPillow.gltf"></a-asset-item>
+      <a-asset-item id="scientistTable" response-type="arraybuffer" src="assets/models/scientistTable.gltf"></a-asset-item>
 
 
       <!--  Astornaut Stuff -->
@@ -91,29 +94,28 @@
 
     <a-entity circles-checkpoint circles-spawnpoint position="0 0 14"></a-entity>
     <a-entity environment="preset:tron;"></a-entity>
-<<<<<<< HEAD
     <a-entity laser-controls="hand:left" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
     <a-entity laser-controls="hand:right" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
 
     
-=======
->>>>>>> dd88da34d995afb8418224887560b6ff987a262c
 
 
     
+    <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role" taskText="Good Job!You have Completed a task" ></a-entity>
+
+
 
 
 
     <a-entity id="Artefact-Product"
     class="interactive"
-    position="-2.392 1.058 0.0" rotation="-90.0 35 0.0" scale="0.2 0.2 0.s2"
+    position="-4.5 0.67 4.0" rotation="-90.0 35 0.0" scale="0.2 0.4 0.2"
     geometry="primitive: plane"
     shadow="receive:true; cast:true;"
     circles-artefact="inspectScale:0.1 0.1 0.1; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
                       label_visible:true; label_offset:0.0 0.3 0.0; arrow_position:down;
                       title: To Do List;
-                      description:Viola found it difficult to find beauty products for black women in Nova Scotia, so she started making and selling her own. This would include driving across the province in her car to make deliveries.;
-                      label_text:Beauty Product;"></a-entity>
+                     label_text:To Do;"></a-entity>
 
     <!-- checkpoints -->
     <a-entity circles-checkpoint circles-spawnpoint position="0.6 0.05 1"> </a-entity>
@@ -156,8 +158,27 @@
 
 
 
+
+
+
+
+
     <!--Environment-->
-    <a-entity position="1 0.03 1" scale="1 1 1" gltf-model="#interior"></a-entity>
+
+      
+      
+      
+      
+      
+      
+      <a-entity position="1 0.03 1" scale="150 150 150"  rotation="0 180 0"gltf-model="#interior"></a-entity>
+
+
+
+
+
+
+  
 
     <a-entity id="floor" geometry="primitive: plane; width: 6.96" position="-0.139 0.4 12.981" material="color: white"
       rotation="-90 0 0"></a-entity>
@@ -360,14 +381,18 @@
 
 
     <a-entity id="scientist-stuff" scale="0.45 0.45 0.45" position="-3.1 0 3.304" rotation="0 45 0">
-      <a-box id="table" color="orange" depth="2" height="1" width="4" position="-2.74104 0.62999 -0.68896"
-        rotation="0 45 0"></a-box>
+      <a-entity id="scienceTable" gltf-model="#scientistTable"  depth="2" position="-3 0 -0.68896"
+        rotation="0 0 0" scale="1.4 1.4 1.4"></a-entity>
       <a-entity id="buttonsPlane" geometry="primitive: plane; height: 3.2" material="color:orange" opacity="0.9"
         rotation="0 0.78 0" position="1.73 1.96 -2.074"></a-entity>
-      <a-entity id="plantTempTube" geometry="primitive: cylinder; height:4; radius:1" material="color:white"
+        <a-entity id="plantPillow" gltf-model="#plantPillowModel"
+        position="0 1.5 -4" ></a-entity>
+        <a-entity id="plantTube" gltf-model="#plantTubeModel"
+        position="0 0 -3.5" scale="1 1 1" ></a-entity>
+      <a-entity id="plantTempTube" geometry="primitive: cylinder; height:4; radius:0.9" material="color:white; opacity:0.5"
         position="0 1.5 -3.5" rCol="127" gCol="127" Temperature="0"></a-entity>
       <a-entity id="plantTempInc" class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2"
-        material="color:green" rotation="90 0 0" position="1.65 2.5 -2" change-plant-temp></a-entity>
+        material="color:green" rotation="90 0 0" position="1.65 3 -2" change-plant-temp></a-entity>
       <a-entity id="plantTempDec" class="interactive" geometry="primitive: cylinder; height:0.05; radius:0.2"
         material="color:red" rotation="90 0 0" position="1.65 1 -2" change-plant-temp></a-entity>
       <a-text id="tempReading" value="0" color="white" position="1.65 2 -2"></a-text>

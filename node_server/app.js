@@ -16,15 +16,6 @@ env = dotenvParseVariables(env.parsed);
 //authentication tutorial used : https://medium.com/of-all-things-tech-progress/starting-with-authentication-a-tutorial-with-node-js-and-mongodb-25d524ca0359
 require('../src/core/circles_server');
 
-<<<<<<< HEAD
-const express = require('express');
-const app = express();
-const fs = require('fs');
-const url = require('url');
-const path = require('path');
-const helmet = require("helmet");
-const sassMiddleware = require('node-sass-middleware');
-=======
 const express         = require('express');
 const app             = express();
 const fs              = require('fs');
@@ -32,7 +23,6 @@ const url             = require('url');
 const path            = require('path');
 const helmet          = require("helmet");
 const sassMiddleware  = require('express-dart-sass');
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504
 
 const http = require('http');
 const server = http.createServer(app);
@@ -76,17 +66,6 @@ app.use(sessionObj);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-<<<<<<< HEAD
-      "default-src": ["'self'"],
-      "connect-src": ["*", "'unsafe-inline'", "blob:", "data:"],
-      "img-src": ["*", "blob:", "data:"],
-      "media-src": ["*"],
-      "frame-src": ["*"],
-      "style-src": ["*", "'unsafe-inline'"],
-      "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
-      "script-src-attr": ["'unsafe-inline'"],
-      "object-src": ["'none'"],
-=======
       "default-src":      ["'self'"],
       "connect-src":      ["*", "'unsafe-inline'", "blob:", "data:"],
       "img-src":          ["*", "blob:", "data:"],
@@ -96,7 +75,6 @@ app.use(
       "script-src":       ["*", "'self'", "'unsafe-inline'", "'unsafe-eval'", "unpkg.com", "aframe.io", "blob:"],
       "script-src-attr":  ["*", "'unsafe-inline'"],
       "object-src":       ["'none'"],
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504
     },
   })
 );
@@ -193,11 +171,6 @@ passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-<<<<<<< HEAD
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-=======
 passport.deserializeUser(function(id, done) {
   let user  = null;
   let error = null;
@@ -211,7 +184,6 @@ passport.deserializeUser(function(id, done) {
 
   getItems().then(function(foundItems) {
     done(error, user);
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504
   });
 });
 
@@ -367,20 +339,10 @@ io.on("connection", socket => {
   };
 
   //listen for all events and forward to all other clients
-<<<<<<< HEAD
   socket.on("*", function (event, data) {
     //ignore reserved event names
     if (event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
       event === CIRCLES.EVENTS.SEND_DATA_SYNC) {
-=======
-  socket.on("*", function(event, data) {
-    //console.log('socket event fired: ' + event);
-
-    //ignore reserved event names
-    if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
->>>>>>> 64a3573bdc90634dfb2bba955203e2723f648504
       return; //exit
     }
 
