@@ -278,6 +278,10 @@ io.on("connection", socket => {
     console.log(`Button ${buttonId} clicked by ${socket.id}`);
     socket.broadcast.emit('destroyButton', buttonId);
   });
+  socket.on('buttonClicked', (buttonId) => {
+    console.log(`Button ${buttonId} clicked by ${socket.id}`);
+    socket.broadcast.emit('destroyButton', buttonId);
+  });
 //
 
   socket.on("disconnect", () => {
@@ -296,11 +300,11 @@ io.on("connection", socket => {
     }
   });
 
-
-  socket.on('win', () => {
+/*
+  socket.on('taskProgression', () => {
     console.log("I selected and will return: ");
 
-  });
+  });*/
 
 
 
