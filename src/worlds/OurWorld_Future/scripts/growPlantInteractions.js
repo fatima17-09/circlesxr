@@ -11,7 +11,7 @@ AFRAME.registerComponent('grow-plant-interactions', {
         console.log("water plant");
         soil.addEventListener('click', function () {
             console.log("water plant");
-           this.el.setAttribute( "color", "#000000");
+           soil.setAttribute( "color", "#000000");
           
       
         

@@ -21,6 +21,7 @@
   <script src="scripts/spinning-effect.js"></script>
   <script src="scripts/buttons.js"></script>
   <script src="scripts/connect-pipes.js"></script>
+  <script src="scripts/selectTool.js"></script>
   <script src="scripts/rocket-align-effect.js"></script>
   <script src="scripts/task-completion-effect.js"></script>
 
@@ -63,9 +64,9 @@
     <a-assets timeout="10000">
       <!-- Mechanics Assets-->
       <a-asset-item id="wireBoard" response-type="arraybuffer" src="assets/models/mechanic_panel.gltf"></a-asset-item>
-      <a-asset-item id="wireB1" response-type="arraybuffer" src="assets/models/wire_broken_1.gltf"></a-asset-item>
-      <a-asset-item id="wireB2" response-type="arraybuffer" src="assets/models/wire_broken_2.gltf"></a-asset-item>
-      <a-asset-item id="wireB3" response-type="arraybuffer" src="assets/models/wire_broken_3.gltf"></a-asset-item>
+      <a-asset-item id="wireB1" response-type="arraybuffer" src="assets/models/wire_damaged_1.gltf"></a-asset-item>
+      <a-asset-item id="wireB2" response-type="arraybuffer" src="assets/models/wire_damaged_2.gltf"></a-asset-item>
+      <a-asset-item id="wireB3" response-type="arraybuffer" src="assets/models/wire_damaged_3.gltf"></a-asset-item>
       <a-asset-item id="interior" response-type="arraybuffer" src="assets/models/rocket_withGlass.gltf"></a-asset-item>
       <a-asset-item id="plantTubeModel" response-type="arraybuffer"  src="assets/models/plantCylinder.gltf"></a-asset-item>
       <a-asset-item id="plantPillowModel" response-type="arraybuffer"  src="assets/models/scientistpPlantPillow.gltf"></a-asset-item>
@@ -97,24 +98,32 @@
 
 
     
-    <a-entity id="gameController" task-completion-effect tasksCompleted="0" tasksUser="role" taskText="Good Job!You have Completed a task" ></a-entity>
+    <a-entity id="gameController" task-completion-effect  numTaskCompleted="0" tasksUser="role" mechanic="incomplete" scientist="incomplete" astronaut="incomplete" taskText="Good Job!You have Completed a task" ></a-entity>
 
 
 
 
 
-    <a-entity id="Artefact-Product"
-    class="interactive"
-    position="-4.5 0.67 4.0" rotation="-90.0 35 0.0" scale="0.2 0.4 0.2"
-    geometry="primitive: plane"
-    shadow="receive:true; cast:true;"
-    circles-artefact="inspectScale:0.1 0.1 0.1; textRotationY:90.0; textLookAt:false; inspectRotation:0 0 0; 
-                      label_visible:true; label_offset:0.0 0.3 0.0; arrow_position:down;
-                      title: To Do List;
-                     label_text:To Do;"></a-entity>
+    <a-entity id="toDoList"  position="-4.5 0.67 4.0" 
+
+  
+      rotation="90 90 0.0" scale="0.2 0.4 0.2"
+      geometry="primitive: plane"
+      shadow="receive:true; cast:true;"
+     
+      circles-lookat="enabled:false;"
+      circles-label="text:To do list; visible:true; offset:0 1 0; arrow_position:down;"
+    circles-lookat="enabled:false;"
+    circles-pickup-object="animate:false; dropPosition:-4.5 0.67 4.0; dropScale:0.2 0.4 0.2 dropRotation:90 90 0.0" circles-interactive-object="type:highlight;" circles-pickup-networked>
+      <a-entity id="scientistTask" text="value: Adjust Temperature;color:white; align:center; width:1; height:0.3;" position=" 0 0.1 0" ></a-entity>
+      <a-entity id="mechanicTask" text="value: Fix the Wires;color:white; align:center; width:1; height:0.3;" position=" 0 0 0" ></a-entity>
+      <a-entity id="astronautTask" text="value: Align Shuttle for Landing;color:white; align:center; width:1; height:0.3;" position=" 0 -0.1 0" ></a-entity>
+  
+  </a-entity>
+  </a-entity>
 
     <!-- checkpoints -->
-    <a-entity circles-checkpoint circles-spawnpoint position="0.6 0.05 1"> </a-entity>
+    <a-entity circles-checkpoint circles-spawnpoint position="0.6 0.05 0.1"> </a-entity>
   
 
 
@@ -176,32 +185,109 @@
 
   
 
-    <a-entity id="floor" geometry="primitive: plane; width: 6.96" position="-0.139 0.4 12.981" material="color: white"
-      rotation="-90 0 0"></a-entity>
-
 
     <!--Mechanic Space-->
     <a-entity id="astronut-stuff" position="0.83 0 10.608">
 
+
+      <a-entity id="soil" geometry="primitive:box; depth:2; height:0.5; width:2"   material="color:red"  position="-1 0.5 0" rotation="0 45 0" circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
+       
+
       <a-entity position="4.55 0.03 -7.70" scale="0.6 0.6 0.6" gltf-model="#wireBoard"></a-entity>
 
-      <a-entity connect-pipes="brokenId:broken-01; fixedId: fixed-01" position="4.56 0.066 -7.756">
-        <a-entity id="broken-01" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB1"></a-entity>
-        <a-entity id="fixed-01" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_1.gltf" visible="false"
-          scale="0.6 0.6 0.6"></a-entity>
+      <a-entity connect-pipes="brokenId:broken-01;  cutId: cut-01; solderId: solder-01; fixedId: fixed-01;" position="4.56 0.066 -7.756" state="broken">
+        <a-entity id="broken-01" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB1"  ></a-entity>
+        <a-entity id="cut-01" scale="0.6 0.58 0.6"  class="interactive" gltf-model="assets/models/wire_cut_1.gltf" visible="false" scale="0.6 0.6 0.6" ></a-entity>
+        <a-entity id="solder-01" scale="0.6 0.58 0.6" class="interactive" gltf-model="assets/models/wire_soldered_1.gltf" visible="false" scale="0.6 0.6 0.6"></a-entity>
+        <a-entity id="fixed-01" scale="0.6 0.58 0.6"  class="interactive" gltf-model="assets/models/wire_repaired_1.gltf" visible="false" scale="0.6 0.6 0.6" ></a-entity>
+          
       </a-entity>
 
-      <a-entity connect-pipes="brokenId:broken-02; fixedId: fixed-02" position="4.553 0.066 -7.756">
-        <a-entity id="broken-02" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB2"></a-entity>
-        <a-entity id="fixed-02" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_2.gltf" visible="false"
-          scale="0.6 0.6 0.6"></a-entity>
+      <a-entity connect-pipes="brokenId:broken-02; cutId: cut-02; solderId: solder-02; fixedId: fixed-02;" position="4.553 0.066 -7.756" state="broken">
+        <a-entity id="broken-02" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB2"  ></a-entity>
+        <a-entity id="cut-02" scale="0.6 0.58 0.6" class="interactive"gltf-model="assets/models/wire_cut_2.gltf" visible="false"></a-entity>
+        <a-entity id="solder-02" scale="0.6 0.58 0.6" class="interactive" gltf-model=" assets/models/wire_soldered_2.gltf" visible="false" scale="0.6 0.6 0.6"></a-entity>
+        <a-entity id="fixed-02" scale="0.6 0.58 0.6" class="interactive" gltf-model="assets/models/wire_fixed_2.gltf" visible="false" ></a-entity>
       </a-entity>
 
-      <a-entity connect-pipes="brokenId:broken-03; fixedId:fixed-03" position="4.543 0.066 -7.756">
+      <a-entity connect-pipes="brokenId:broken-03; cutId:cut-03; solderId: solder-03; fixedId:fixed-03;" position="4.543 0.066 -7.756" state="broken">
         <a-entity id="broken-03" scale="0.6 0.58 0.6" class="interactive" gltf-model="#wireB3"></a-entity>
-        <a-entity id="fixed-03" scale="0.6 0.58 0.6" gltf-model="assets/models/wire_fixed_3.gltf" visible="false"
-          scale="0.6 0.6 0.6"></a-entity>
+        <a-entity id="cut-03" scale="0.6 0.58 0.6" class="interactive"gltf-model="assets/models/wire_cut_3.gltf" visible="false"scale="0.6 0.6 0.6"></a-entity>
+        <a-entity id="solder-03" scale="0.6 0.58 0.6" class="interactive" gltf-model=" assets/models/wire_soldered_3.gltf" visible="false" scale="0.6 0.6 0.6"></a-entity>
+        <a-entity id="fixed-03" scale="0.6 0.58 0.6"class="interactive" gltf-model="assets/models/wire_fixed_3.gltf" visible="false" scale="0.6 0.6 0.6"></a-entity>
       </a-entity>
+
+
+      <!--Mechanic Tools-->
+      <a-entity id="tools" position="4.5 0.066 -8" selectedTool="none">
+        <a-entity id="wireCutters" geometry="primitive:box; width:0.5; depth:0.5; height:0.2;"
+        material="color:rgb(255, 0,0)"  position="-0.5 0 1" select-tool="selectedToolID:wireCutters; isHolding:false;"
+        circles-artefact="
+        inspectPosition:      0.0 0.0 0.4;
+        inspectScale:         1 1 1;
+        inspectRotation:      0 0 0;
+        textRotationY:        0;
+        description_offset:    0.5 3 -1.5;
+        description_on:       true;
+        desc_arrow_position:  down;
+        label_text:           Wire Cutters;
+        label_offset:         0 0.5 0;
+        label_on:             true;
+        label_arrow_position: down;
+        title:               Wire Cutters;
+        description:         Equipment and cables can be repaired in space by astronauts on board.  Astronauts are trained to perform this maintenance as it is a delicate and time consuming process. They use tools  such as wire cutters, crimpers and connectors.;
+        title_back:          Wire Cutters;
+        description_back:     Equipment and cables can be repaired in space by astronauts on board.  Astronauts are trained to perform this maintenance as it is a delicate and time consuming process. They use tools  such as wire cutters, crimpers and connectors.;
+        audio:                #some-snd; 
+        volume:               0.4;"></a-entity>
+
+
+
+
+        <a-entity id="spliceWire" geometry="primitive:box; width:0.5; depth:0.5; height:0.2;"
+        material="color:rgb(0, 255,0)"  position="0 0 1" select-tool="selectedToolID:spliceWire; isHolding:false;"circles-artefact="
+        inspectPosition:      0.0 0.0 0.4;
+        inspectScale:         1 1 1;
+        inspectRotation:      0 0 0;
+        textRotationY:        0;
+        description_offset:    0.5 3 -1.5;
+        description_on:       true;
+        desc_arrow_position:  down;
+        label_text:           Splice Wires;
+        label_offset:         0 0.5 0;
+        label_on:             true;
+        label_arrow_position: down;
+        title:                Splice Wires;
+        description:          Cable maintenance is quite the task due the harsh environment in space. 
+                              Microgravity, radiation, extreme temperature and accessibility  are some of the challenges that affect the maintenance process.;        
+        audio:                #some-snd; 
+        volume:               0.4;"></a-entity>
+        <a-entity id="solderWire" geometry="primitive:box; width:0.5; depth:0.5; height:0.2;"
+        material="color:rgb(0, 0, 255)"  position="0.5 0 1" select-tool="selectedToolID:solderWire; isHolding:false;"circles-artefact="
+        inspectPosition:      -1 0.0 0.4;
+        inspectScale:         1 1 1;
+        inspectRotation:      0 0 0;
+        textRotationY:        0;
+        description_offset:    0.5 3 -1.5;
+        description_on:       true;
+        desc_arrow_position:  down;
+        label_text:           Solder Wires;
+        label_offset:         0 0.5 0;
+        label_on:             true;
+        label_arrow_position: down;
+        title:                Solder Wires;
+        description:          Some examples of maintenance that astronauts must perform are electrical system checks, cable routing checks, cable repairs, thermal management and software updates.
+        audio:                #some-snd; 
+        volume:               0.4;"></a-entity>></a-entity>
+      </a-entity>
+
+
+
+
+
+
+
+
 
       <!-- Mechanic panel-->
       <a-entity id="mechanicPanelText" position="6.37963 1.16445 -7.69992">
@@ -357,7 +443,7 @@
       <a-entity id="rocket-button" class="button interactive" position="-1 0.65 -8.695"
         create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
         geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
-        create-info="value: Space Inforamtion; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
+        create-info="value: When a spacecraft enters the orbit of the planet they want to land on, they must slow down using the atmosphere’s pressure. They end up orbiting/rotating around the planet, slowly descending and getting to a slower speed. They must also be at the correct angle; if too steep, entry into the atmosphere will be too hot and the spacecraft will combust. If too shallow, the spacecraft cannot pierce the atmosphere and may “bounce off”. ; position: 0.4 1.5 1;" sound="src: #click_sound; on: click"
         geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(250,128,114);" shadow
         animation__mouseenter_bunny="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseenter; dur:200;"
         animation__mouseleave_bunny="property:material.color; type:color; to:rgb(250,128,114); startEvents:mouseleave; dur:200;"
@@ -383,6 +469,36 @@
         rotation="0 0.78 0" position="1.73 1.96 -2.074"></a-entity>
         <a-entity id="plantPillow" gltf-model="#plantPillowModel"
         position="0 1.5 -4" ></a-entity>
+        <a-entity id="plantPillow" gltf-model="#plantPillowModel"
+        position="-1.8 1.5 -1.2"
+      
+
+        circles-artefact="inspectScale:1 1 1; textRotationY:0.0; textLookAt:false; inspectRotation:45 0 0; 
+                      label_visible:true; label_offset:0.0 -0.4 0.0; arrow_position:down;
+                     
+                     description_offset:    0 1 0;
+                     description_on:       true;
+                     desc_arrow_position:  down;
+                     label_text:           Plant Pillow;
+                     label_offset:         0 1 0;
+                     label_on:             true;
+                     label_arrow_position: down;
+                     title:                Plant Pillow;
+                     description:          Plant pillow is a kit designed for growing plants in space. It helps distribute water nutrients and air to a plants root. 
+                                            
+                                          ~ ~Flip for hint ~ ~
+                    ;
+                     title_back:           Plant Pillow;
+                     description_back:     The space crew may adjust the LED lighting and watering as needed to ensure optimal growth. Similar to earth, its is best to stick to a temperature between 24°C-28°C.
+                     ;
+                     audio:                #some-snd; "
+                     ></a-entity>
+
+      
+
+
+
+
         <a-entity id="plantTube" gltf-model="#plantTubeModel"
         position="0 0 -3.5" scale="1 1 1" ></a-entity>
       <a-entity id="plantTempTube" geometry="primitive: cylinder; height:4; radius:0.9" material="color:white; opacity:0.5"
@@ -437,6 +553,34 @@
       if (button) {
         button.parentNode.removeChild(button);
       }
+    });
+
+    socket.on('taskProgression', (role) => {
+
+      console.log("we  enter the loop");
+      let gameControl= document.getElementById(gameController);
+      if (role=="astronaut")
+      {
+      let toDoListItem= document.getElementById(astronautTask);
+     
+      toDoListItem.setAttribute("text",   {value: "Completed: A̶l̶i̶g̶n̶ ̶S̶h̶u̶t̶t̶l̶e̶ ̶f̶o̶r̶ ̶L̶a̶n̶d̶i̶n̶g̶"});
+      gameControl.setAttribute("astronaut", "progress");
+    }
+    if (role=="scientist")
+      {
+      let toDoListItem= document.getElementById(scientistTask);
+      toDoListItem.setAttribute("text",   {value: "Completed: A̶d̶j̶u̶s̶t̶ ̶T̶e̶m̶p̶e̶r̶a̶t̶u̶r̶e̶"});
+      gameControl.setAttribute("astronaut", "progress");
+    }
+    if (role=="mechanic")
+      {
+      let toDoListItem= document.getElementById(mechanicTask);
+      toDoListItem.setAttribute("text",   {value: "Completed: F̶i̶x̶ ̶t̶h̶e̶ ̶W̶i̶r̶e̶s̶"});
+      gameControl.setAttribute("astronaut", "progress");
+    }
+
+    socket.emit('taskCompleted');
+
     });
 
   </script>

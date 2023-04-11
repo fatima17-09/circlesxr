@@ -24,23 +24,36 @@
      <a-scene circles_scene_properties>
       <a-assets>
         <!-- add your assets here -->
-       
+        <a-asset-item id="greenHouseModel" src="assets/models/mars_greenhouse.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="greenHouseModel" src="assets/models/mars_spaceshuttle.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
+
       </a-assets>
       <!-- avatar -->
        <!--  NOT <circles-avatar/>, BUT RATHER -->
        <circles-manager-avatar/>
        
        <a-entity environment="preset:yavapai"></a-entity>
-    
+    <a-entity gltf-model="#greenHouseModel"  scale="1 1 1">
+    </a-entity gltf-model="#spaceShuttleModel" scale="1 1 1">
+
+    </a-entity>
 
        <a-sphere color="#676767" position="-10 1.25 -2" radius="5.25"></a-sphere>
-       <a-box id="soil" circles-interactive-object color="#964B00" depth="2" height="0.5" width="2" position="-1 0.5 0" rotation="0 45 0" grow-plant-interactions></a-box>
-
-       
+      
+       <a-entity id="soil" geometry="primitive:box; depth:2; height:0.5; width:2"   material="color:red"  position="-1 0.5 0" rotation="0 45 0" circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
         <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-       
+       <a-entity id ="marsControlPanel" geometry="primitive=box; depth 3; height 3; width 4" material="color:blue" position="0 0 0" >
+        <a-entity id="soilOptionDial"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)" position=" 1 0 0"></a-entity>
+       <a-entity id="CO2DialOption"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"  position="-1 0 0"></a-entity>
+
+
+
+
+       </a-entity>
 
     </a-scene>
     <!-- Circles' end scripts [REQUIRED] -->

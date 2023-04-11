@@ -1,29 +1,103 @@
 AFRAME.registerComponent('connect-pipes', {
     schema: {
       brokenId: { type: 'string', default: 'broken-pipe' },
-      fixedId: { type: 'string', default: 'fixed-pipe' }
+      cutId: { type: 'string', default: 'cut-pipe' },
+      solderId: { type: 'string', default: 'solder-pipe' },
+      fixedId: { type: 'string', default: 'fixed-pipe' },
+     
+  
+      
     },
 
     init: function () {
+    
+
+
       var originalPipeEl = document.querySelector('#' + this.data.brokenId);
+      var cutPipeEl = document.querySelector('#' + this.data.cutId);
+      var solderPipeEl = document.querySelector('#' + this.data.solderId);
       var fixedPipeEl = document.querySelector('#' + this.data.fixedId);
+      var gameController = document.querySelector("#gameContoller");
+    
       var destroyedCount = 0;
       let counter = false;
       var counterEl = document.querySelector('#destroyed-count');
+      var toolSelection=document.querySelector("#tools");
+
+     
+
+     this.el.addEventListener('click', function () {
+      
+       
+    
+       
+        if(toolSelection.getAttribute("selectedTool") == "wireCutters"){
+          if (originalPipeEl.parentElement.getAttribute("state")=='broken'){
+            originalPipeEl.parentNode.removeChild(originalPipeEl);
+            console.log("object destroyed");
+            console.log("WireCuter");
+            cutPipeEl.setAttribute('visible', true);
+            cutPipeEl.getObject3D('mesh').visible = true;
+            counter = true;
+    
+            if (counter) {
+              destroyedCount++;
+              console.log(destroyedCount)
+            }
+            cutPipeEl.parentNode.setAttribute("state" , "splice")
+
+          }
 
 
-      originalPipeEl.addEventListener('click', function () {
-        console.log('Clicked on', originalPipeEl);
-        originalPipeEl.parentNode.removeChild(originalPipeEl);
-        console.log("object destroyed")
-        fixedPipeEl.setAttribute('visible', true);
-        fixedPipeEl.getObject3D('mesh').visible = true;
-        counter = true;
+          };
 
-        if (counter) {
-          destroyedCount++;
-          console.log(destroyedCount)
-        }
+
+          if(toolSelection.getAttribute("selectedTool") == "spliceWire"){
+           
+            if (cutPipeEl.parentElement.getAttribute("state")=='splice'){
+             cutPipeEl.parentNode.removeChild(cutPipeEl);
+              console.log("object destroyed");
+              console.log("splice wires");
+              solderPipeEl.setAttribute('visible', true);
+              solderPipeEl.getObject3D('mesh').visible = true;
+              counter = true;
+      
+              if (counter) {
+                destroyedCount++;
+
+
+                +destroyedCount;
+                setAtribute (wireRepairs)
+
+
+                console.log(destroyedCount)
+              }
+  
+              solderPipeEl.parentNode.setAttribute( "state", "solder")
+            }
+  
+  
+            };
+            if(toolSelection.getAttribute("selectedTool") == "solderWire"){
+           
+              if (solderPipeEl.parentElement.getAttribute("state")=='solder'){
+               solderPipeEl.parentNode.removeChild(solderPipeEl);
+                console.log("object destroyed")
+                fixedPipeEl.setAttribute('visible', true);
+                fixedPipeEl.getObject3D('mesh').visible = true;
+                counter = true;
+        
+                if (counter) {
+                  destroyedCount++;
+                  console.log(destroyedCount)
+                }
+    
+                fixedPipeEl.parentNode.setAttribute( "state", "fixed")
+              }
+    
+    
+              };
+       
 
       });
     }

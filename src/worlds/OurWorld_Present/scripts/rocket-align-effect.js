@@ -7,13 +7,15 @@ AFRAME.registerComponent('rocket-align-effect', {
         const scene      = document.querySelector('a-scene');
         CONTEXT_AF.rocket      = document.querySelector('#rocket');
         CONTEXT_AF.isSpinning = false;
-        
+        CONTEXT_AF.toDoListItem     = document.querySelector('#astronautTask');
+        CONTEXT_AF.gameController = document.querySelector('#gameController');
         console.log("rocketSpin");
 
      
       
         let temp=25;
-
+        //unfortunately due to time constraint decided to harde code this one
+        let role="astronaut";
         var interval;      
        
         this.el.addEventListener('click', function () {
@@ -30,10 +32,6 @@ AFRAME.registerComponent('rocket-align-effect', {
                 }
             
   
-           // CONTEXT_AF.plantTempTube.setAttribute("gCol",greenCol);
-           // CONTEXT_AF.plantTempTube.setAttribute("rCol",redCol);
-          
-        
 
         
         
@@ -55,11 +53,11 @@ if(CONTEXT_AF.isSpinning==false)
 
     console.log(rocketAngles3);
        console.log("you did it");
-
-       let indicator = document.querySelector('#gameController');
-
-       // trigger the stop event on the left indicator
-       indicator.emit('win');
+       //CONTEXT_AF.toDoListItem.setAttribute("text",  {value: "Completed: A̶l̶i̶g̶n̶ ̶S̶h̶u̶t̶t̶l̶e̶ ̶f̶o̶r̶ ̶L̶a̶n̶d̶i̶n̶g̶"});
+     
+       console.log(role);
+       
+       CONTEXT_AF.gameController.emit('taskProgression', role);
 
 
    }
@@ -74,29 +72,7 @@ if(CONTEXT_AF.isSpinning==false)
 
 
 })
-      /*
-
-        function spinning(thisp){
-            
-            let rocketRotation= CONTEXT_AF.rocket.getAttribute("rotation");
-            //let rotationAngle= el.getAttribute("rocketAngle");
-            //let rotationAngle1= this.el.getAttribute('rocketAngle');
-            //let rotationAngle2= this.getAttribute('rocketAngle');
-            let rotationAngle2= thisp.el.getAttribute('rocketAngle');
-           
-            console.log("On click the angle is" +  rotationAngle2);
-            rotationAngle2++;
-            
-            //console.log("On click the angle is" +  rotationAngle);
-            console.log("On click the angle is" +  rotationAngle2);
-            
-                let newAngle=("0 0 " + rotationAngle2);
-                thisp.el.setAttribute("rocketAngle", rotationAngle2);
-                CONTEXT_AF.rocket.setAttribute("rotation", newAngle);
-
-        
-        }
-      */
+    
         
         function spinning(thisp){
            

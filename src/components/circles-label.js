@@ -71,22 +71,22 @@ AFRAME.registerComponent('circles-label', {
         if (CONTEXT_AF.labelArrow !== null) {
             if ( data.arrow_position == 'up' ) {
                 CONTEXT_AF.labelArrow.object3D.visible = true;
-                CONTEXT_AF.labelArrow.object3D.position.set( 0.0, CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
+                CONTEXT_AF.labelArrow.object3D.position.set( 0.0, CONTEXT_AF.LABEL_HEIGHT/2+0.05, 0.0 );
                 CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, Math.PI );
             }
             else if ( data.arrow_position == 'right' ) {
                 CONTEXT_AF.labelArrow.object3D.visible = true;
-                CONTEXT_AF.labelArrow.object3D.position.set( CONTEXT_AF.LABEL_WIDTH/2, 0.0, 0.0 );
+                CONTEXT_AF.labelArrow.object3D.position.set( CONTEXT_AF.LABEL_WIDTH/2+0.05, 0.0, 0.0 );
                 CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, Math.PI/2.0 );
             }
             else if ( data.arrow_position == 'down' ) {
                 CONTEXT_AF.labelArrow.object3D.visible = true;
-                CONTEXT_AF.labelArrow.object3D.position.set( 0.0, -CONTEXT_AF.LABEL_HEIGHT/2, 0.0 );
+                CONTEXT_AF.labelArrow.object3D.position.set( 0.0, -CONTEXT_AF.LABEL_HEIGHT/2-0.05, 0.0 );
                 CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, 0.0 );
             }
             else if ( data.arrow_position == 'left' ) {
                 CONTEXT_AF.labelArrow.object3D.visible = true;
-                CONTEXT_AF.labelArrow.object3D.position.set( -CONTEXT_AF.LABEL_WIDTH/2 , 0.0, 0.0 );
+                CONTEXT_AF.labelArrow.object3D.position.set( -CONTEXT_AF.LABEL_WIDTH/2-0.05 , 0.0, 0.0 );
                 CONTEXT_AF.labelArrow.object3D.rotation.set( 0.0, 0.0, -Math.PI/2.0 );
             }
             else if ( data.arrow_position == 'none' ) {
@@ -123,7 +123,8 @@ AFRAME.registerComponent('circles-label', {
     bg.classList.add('label_bg');
     bg.setAttribute('circles-rounded-rectangle',  {width:CONTEXT_AF.LABEL_WIDTH, height:CONTEXT_AF.LABEL_HEIGHT, radius:CIRCLES.CONSTANTS.GUI.rounded_rectangle_radius});
     bg.setAttribute('position',  {x:0.0, y:0.0, z:0.0});
-    bg.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
+   // bg.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
+    bg.setAttribute('material', {color: "rgb(000,000,000)", opacity:0.5});
     bg.addEventListener('loaded', function () {
         bg.addEventListener('mouseenter', (e) => {
             const scaleSize = 1.05;
@@ -139,7 +140,7 @@ AFRAME.registerComponent('circles-label', {
     //create label
     CONTEXT_AF.labelText = document.createElement('a-entity');
     CONTEXT_AF.labelText.setAttribute('text', {  align:'center', baseline:'center', wrapCount:20,
-                                      color:'rgb(0,0,0)', width:CONTEXT_AF.TEXT_WIDTH, height:CONTEXT_AF.TEXT_HEIGHT, 
+                                      color:'rgb(255,255,255)', width:CONTEXT_AF.TEXT_WIDTH, height:CONTEXT_AF.TEXT_HEIGHT, 
                                       font: CIRCLES.CONSTANTS.GUI.font_header,
                                       value:data.text});
     CONTEXT_AF.labelText.setAttribute('position', {x:0, y:0.0, z:0.05});
@@ -147,13 +148,36 @@ AFRAME.registerComponent('circles-label', {
  
     //createpointer
     CONTEXT_AF.labelArrow = document.createElement('a-entity');
-    CONTEXT_AF.labelArrow.setAttribute('geometry',  {   primitive:'triangle', 
+   /* CONTEXT_AF.labelArrow.setAttribute('geometry',  {   primitive:'triangle', 
                                                         vertexA:{x:CONTEXT_AF.ARROW_SIZE, y:0.0, z:0}, 
                                                         vertexB:{x:-CONTEXT_AF.ARROW_SIZE, y:0.0, z:0}, 
                                                         vertexC:{x:0.0, y:-CONTEXT_AF.ARROW_SIZE, z:0}
-                                                    });
-    CONTEXT_AF.labelArrow.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
+                                                    });*/
+    CONTEXT_AF.labelArrow.setAttribute('geometry',  {   primitive:'plane', 
+        width: 0.01, 
+        height: 0.1, 
+    });
+    //CONTEXT_AF.labelArrow.setAttribute('material',  CIRCLES.CONSTANTS.GUI.material_bg_basic);
+    CONTEXT_AF.labelArrow.setAttribute('material', {color: "rgb(000,000,000)", opacity:0.5});
     CONTEXT_AF.labelWrapper.appendChild(CONTEXT_AF.labelArrow);
+
+
+    //crreate pointer circle
+    CONTEXT_AF.labelArrowCircle = document.createElement('a-entity');
+     CONTEXT_AF.labelArrowCircle.setAttribute('geometry',  {   primitive:'circle', 
+         radius: 0.035, 
+     });
+     CONTEXT_AF.labelArrowCircle.setAttribute('material', {color: "rgb(37,207,240)"});
+     CONTEXT_AF.labelArrowCircle.setAttribute('position', {x:0, y:-0.34, z:0.0});
+     CONTEXT_AF.labelWrapper.appendChild(CONTEXT_AF.labelArrowCircle);
+ 
+
+
+
+
+
+
+
   },
   remove: function () {}
 });
