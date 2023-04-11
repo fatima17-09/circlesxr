@@ -14,12 +14,15 @@
   <script src="scripts/controlPanelInteractions.js"></script>
   <script src="scripts/portalInteractions.js"></script>
   <script src="scripts/interactions.js"></script>
+  <script src="scripts/buttons.js"></script>
   <script src="../../components/circles-interactive-object.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
 
 </head>
 
 <body>
+
+  </script>
   <!-- this is used to create our enter UI that creates a 2D overlay to capture a user gesture for sound/mic access etc. -->
   <circles-start-ui />
 
@@ -34,13 +37,18 @@
     <img id="orbital_img" src="assets/images/oribital.png" crossorigin="anonymous">
     <img id="subOrbital_img" src="assets/images/subOrbital.png" crossorigin="anonymous">
 
-    <img id="missileV2_img" src="assets/images/missileV2.png" crossorigin="anonymous">
-    <img id="rocketR1_img" src="assets/images/rocketR1.png" crossorigin="anonymous">
-    <img id="sputnik1_img" src="assets/images/sputnik1.png" crossorigin="anonymous">
+    <img id="missileV2_img" src="assets/images/1946.png" crossorigin="anonymous">
+    <img id="rocketR1_img" src="assets/images/1951.png" crossorigin="anonymous">
+    <img id="sputnik1_img" src="assets/images/1957.png" crossorigin="anonymous">
 
-    <img id="explorer1_img" src="assets/images/explorer1.png" crossorigin="anonymous">
-    <img id="sputnik2_img" src="assets/images/spuntik2.png" crossorigin="anonymous">
-    <img id="sputnik5_img" src="assets/images/sputnik5.png" crossorigin="anonymous">
+    <img id="explorer1_img" src="assets/images/1960.png" crossorigin="anonymous">
+    <img id="sputnik2_img" src="assets/images/1969.png" crossorigin="anonymous">
+    <img id="sputnik5_img" src="assets/images/1981.png" crossorigin="anonymous">
+
+    <img id="intro_img" src="assets/images/intro.png" crossorigin="anonymous">
+
+    <audio id="ambient_aud" src="assets/sound/Kirk Osamayo - Space Dust.mp3" crossorigin="anonymous">
+    <audio id="click_aud" src="assets/sound/button-click.mp3" crossorigin="anonymous"></audio>
 
       <!-- Circles' built-in assets [REQUIRED] -->
       <circles-assets />
@@ -51,29 +59,29 @@
     <!-- avatar -->
     <!--  NOT <circles-avatar/>, BUT RATHER -->
     <circles-manager-avatar />
-    <a-entity light="type: spot; intensity: 1.4; castShadow: true; shadowBias: -0.0005; angle: 40; penumbra: 0.3"
+    <a-entity id="light" light="type: spot; intensity: 15; castShadow: true; shadowBias: -0.0005; angle: 40; penumbra: 0.3"
       position="0.5 -0.5 0" rotation=""></a-entity>
 
       <a-entity circles-checkpoint circles-spawnpoint position="0 1.255 1.2"></a-entity> <!-- Main spawn point-->
-      <a-entity circles-checkpoint circles-spawnpoint position="4 1.255 1.2"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-4 1.255 1.2"></a-entity>
+      <a-entity circles-checkpoint  position="4 1.255 1.2"></a-entity>
+      <a-entity circles-checkpoint  position="-4 1.255 1.2"></a-entity>
 
-      <a-entity circles-checkpoint circles-spawnpoint position="6.459 0.242 -6.349"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="6.459 0.242 0.68"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="6.459 0.242 -10"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="6.459 0.242 -3.2"></a-entity>
+      <a-entity circles-checkpoint  position="6.459 0.242 -6.349"></a-entity>
+      <a-entity circles-checkpoint  position="6.459 0.242 0.68"></a-entity>
+      <a-entity circles-checkpoint  position="6.459 0.242 -10"></a-entity>
+      <a-entity circles-checkpoint  position="6.459 0.242 -3.2"></a-entity>
 
-      <a-entity circles-checkpoint circles-spawnpoint position="4.15 0.242 -11"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-4.15 0.242 -11"></a-entity>
+      <a-entity circles-checkpoint  position="4.15 0.242 -11"></a-entity>
+      <a-entity circles-checkpoint  position="-4.15 0.242 -11"></a-entity>
       
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.242 -10.8"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.242 -6.92"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="0 0.242 -3.92"></a-entity>
+      <a-entity circles-checkpoint  position="0 0.242 -10.8"></a-entity>
+      <a-entity circles-checkpoint  position="0 0.242 -6.92"></a-entity>
+      <a-entity circles-checkpoint  position="0 0.242 -3.92"></a-entity>
   
 
-      <a-entity circles-checkpoint circles-spawnpoint position="-7.084 0.242 -6.89"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-7.084 0.242 0.957"></a-entity>
-      <a-entity circles-checkpoint circles-spawnpoint position="-7.084 0.242 -3.47"></a-entity>
+      <a-entity circles-checkpoint  position="-7.084 0.242 -6.89"></a-entity>
+      <a-entity circles-checkpoint  position="-7.084 0.242 0.957"></a-entity>
+      <a-entity circles-checkpoint  position="-7.084 0.242 -3.47"></a-entity>
      
       <a-entity id="back-wall" position="0 3.93 3.95" rotation="0 180 0" scale="" geometry="primitive: plane; width: 16.28; height: 7.51" material="color: grey"> </a-entity>
       <a-entity id="roof" position="0.4 7.4 -4.8" rotation="90 0 0" scale="1.2 1.2 1.2" geometry="primitive: plane; width: 16.28; height: 14.89" material="color: grey"> </a-entity>
@@ -81,16 +89,22 @@
     <a-entity laser-controls="hand:left" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
     <a-entity laser-controls="hand:right" raycaster="lineColor: red; lineOpacity: 0.5"></a-entity>
 
+    <a-entity position="0 2.6 -0.47" scale="1 1 1">
+      <a-entity close-button id="textPanel" geometry="primitive:plane; width:3; height:1.8"  material="src:#intro_img;">
+        <a-entity  audio-on-click="audioID: ambient_aud;" class="interactive close-button" position="1.34 0.77 0"
+          geometry="primitive:plane; width:0.3; height:0.3" material="color:red; opacity:0"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+      </a-entity>
+    </a-entity>
+    
 
     <a-entity environment="preset:default"></a-entity>
 
     <a-entity id="pastScene" gltf-model="#pastScene-gltf" position="0 1.078 0" rotation="0 0 0"
       scale="0.08 0.08 0.08"></a-entity>
 
-
-    <a-entity class="interactive" circles-interactive-object id="start-reading" geometry="height: 0.3; width: 0.54; depth: 0.23" id="redButton"
-      material="color: rgb(255,0, 0)" position="-0.31 1.68 -0.63" educational-panels
-      ></a-entity>
+    <a-entity class="interactive" circles-interactive-object audio-on-click="audioID: click_aud" audio="src:volume: 0.2"  id="start-reading" geometry="height: 0.3; width: 0.54; depth: 0.23" id="redButton"
+      material="color: rgb(255,0, 0)" position="-0.31 1.68 -0.63" educational-panels></a-entity>
 
     <a-entity id="content-container">
 
@@ -115,9 +129,9 @@
 
       <a-entity id="content3" visible="false">
         <a-entity position="-5.2 2.89 -10.9" rotation="0 20 0" scale="1 1 1"
-          geometry="primitive:plane; width:5; height:2.8;" material="src:#sputnik2_img; transparent:true"></a-entity>
+          geometry="primitive:plane; width:5; height:2.8;" material="src:#explorer1_img; transparent:true"></a-entity>
         <a-entity position="0 2.89 -12" rotation="0 0 0" scale="1 1 1"
-          geometry="primitive:plane; width:5.3; height:2.9;" material="src:#explorer1_img; transparent:true"></a-entity>
+          geometry="primitive:plane; width:5.3; height:2.9;" material="src:#sputnik2_img; transparent:true"></a-entity>
         <a-entity position="5.2 2.89 -10.9" rotation="0 -20 0" scale="1 1 1"
           geometry="primitive:plane; width:5.3; height:2.8;" material="src:#sputnik5_img; transparent:true"></a-entity>
       </a-entity>
@@ -127,13 +141,13 @@
     </a-entity>
 
 
-    <a-entity class="interactive" id="nextButton" panel-slider
+    <a-entity class="interactive" id="nextButton" audio-on-click="audioID:click_aud" panel-slider
       geometry="height: 0.2; width: 0.2; depth: 0.1" material="color: rgb(32,32,32)" position="2 1.68 -0.63"
       animation__mouseenter="property:material.color; type:color; to:rgb(152,251,152); startEvents:mouseenter; dur:200"
       animation__mouseleave="property:material.color; type:color; to:rgb(50,205,50); startEvents:mouseleave; dur:200"
       animation__click="property:position; from:2 1.62 -0.63; to:2 1.68 -0.63; startEvents:click; dur:300"></a-entity>
 
-    <a-entity class="interactive" id="backButton" panel-slider
+    <a-entity class="interactive" id="backButton" audio-on-click="audioID:click_aud" panel-slider
       geometry="height: 0.2; width: 0.2; depth: 0.1" material="color: rgb(32,32,32)" position="1.5 1.68 -0.63"
       animation__mouseenter="property:material.color; type:color; to:rgb(255,255,153); startEvents:mouseenter; dur:200"
       animation__mouseleave="property:material.color; type:color; to:rgb(255,255,0); startEvents:mouseleave; dur:200"
@@ -153,6 +167,29 @@
   <!-- Circles' end scripts [REQUIRED] -->
   <circles-end-scripts />
 
+  <script>
+    AFRAME.registerComponent('audio-on-click', {
+      schema: {
+      audioID: {type: 'string', default:'ambient'} 
+    },
+  init:function() {
+     let playing = false;
+     var el = this.el;
+     let audioFile = document.querySelector('#' + this.data.audioID);
+   
+     el.addEventListener('click', () => {
+          if(!playing) {
+              audioFile.play();
+              audioFile.setAttribute("volume",0);
+           } else {
+              audioFile.pause();
+              audioFile.currentTime = 0;
+           }
+           playing = !playing;
+     });
+  }
+})
+</script>
 </body>
 
 </html>
