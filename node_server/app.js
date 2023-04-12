@@ -322,6 +322,18 @@ const playerPositions = {};
     }
   });
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> Stashed changes
+
+  socket.on("taskProgression", () => {
+    console.log("I selected and will return: ");
+
+  });
+
+>>>>>>> Stashed changes
 
 
 

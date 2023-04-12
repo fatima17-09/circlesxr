@@ -17,7 +17,13 @@ AFRAME.registerComponent('connect-pipes', {
       var solderPipeEl = document.querySelector('#' + this.data.solderId);
       var fixedPipeEl = document.querySelector('#' + this.data.fixedId);
       var gameController = document.querySelector("#gameController");
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
       const portal = document.querySelector('#portal');
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     
       var destroyedCount = 0;
       let counter = false;
@@ -56,7 +62,22 @@ AFRAME.registerComponent('connect-pipes', {
               console.log("splice wires");
               solderPipeEl.setAttribute('visible', true);
               solderPipeEl.getObject3D('mesh').visible = true;
+<<<<<<< Updated upstream
               
+=======
+              counter = true;
+      
+              if (counter) {
+                destroyedCount++;
+
+
+              //  +destroyedCount;
+               // setAtribute (wireRepairs)
+
+
+                console.log(destroyedCount)
+              }
+>>>>>>> Stashed changes
   
               solderPipeEl.parentNode.setAttribute( "state", "solder")
             }
@@ -64,6 +85,9 @@ AFRAME.registerComponent('connect-pipes', {
   
             };
             if(toolSelection.getAttribute("selectedTool") == "solderWire"){
+              
+              console.log("object destroyed");
+              console.log("solderwire");
            
               if (solderPipeEl.parentElement.getAttribute("state")=='solder'){
                solderPipeEl.parentNode.removeChild(solderPipeEl);

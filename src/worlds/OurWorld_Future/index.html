@@ -10,8 +10,12 @@
           
           
           add aframe-->
-        <script src="scripts/controlPanelInteractions.js"></script>
+        <script src="scripts/create-info.js"></script>
         <script src="scripts/growPlantInteractions.js"></script>
+        <script src="scripts/info-panel-effect.js"></script>
+        <script src="scripts/buttons.js"></script>
+        <script src="scripts/limit-postion-effect.js"></script>
+        <script src="scripts/soilSelected.js"></script>
         <script src="https://unpkg.com/aframe-environment-component@1.3.2/dist/aframe-environment-component.min.js"></script>
         
    </head>
@@ -22,11 +26,43 @@
 
         <!-- a-scene with 'circles-properties' component [REQUIRED] -->
      <a-scene circles_scene_properties>
+  
+
+
+
+        <!--Game Intro-->
+        <a-entity position="0 1.6 30.5">
+          <a-plane close-button id="textPanel" width="3" height="1.5" color="black" opacity="0.8">
+            <a-entity class="panel-text" text="value: Welcome to the Navet Navette spaceship!
+                Chose your role and start exploring.; align:center; width:2; color:white;"></a-entity>
+            <a-entity class="interactive close-button" position="1.3 0.6 0"
+              geometry="primitive:plane; width:0.3; height:0.3" material="color:red; opacity:0"
+              text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+          </a-plane>
+        </a-entity>
+        </a-entity>
+    
       <a-assets>
         <!-- add your assets here -->
         <a-asset-item id="greenHouseModel" src="assets/models/mars_greenhouse.gltf"  response-type="arraybuffer"
         crossorigin="anonymous"></a-asset-item>
-        <a-asset-item id="greenHouseModel" src="assets/models/mars_spaceshuttle.gltf"  response-type="arraybuffer"
+        <a-asset-item id="spaceShuttleModel" src="assets/models/mars_spaceShuttle.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="rocketInteriorModel" src="assets/models/rocket_present.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="booksModel" src="assets/models/books.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="leverModel" src="assets/models/lever.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="soilSackModel" src="assets/models/soil.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="waterCanModel" src="assets/models/watercan.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="plant1Model" src="assets/models/plant_1.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="plant2CanModel" src="assets/models/plant_2.gltf"  response-type="arraybuffer"
+        crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="plant3Model" src="assets/models/plant_3.gltf"  response-type="arraybuffer"
         crossorigin="anonymous"></a-asset-item>
         <!-- Circles' built-in assets [REQUIRED] -->
         <circles-assets/>
@@ -37,27 +73,242 @@
        <circles-manager-avatar/>
        
        <a-entity environment="preset:yavapai"></a-entity>
-    <a-entity gltf-model="#greenHouseModel"  scale="1 1 1">
-    </a-entity gltf-model="#spaceShuttleModel" scale="1 1 1">
+    <a-entity id="biodome" visible="false" gltf-model="#greenHouseModel"  scale="0.75 0.75 0.75">
+      <a-entity id="soilBag"  gltf-model="#soilSackModel"  scale="0.4 0.4 0.4"  position="12.3 0.5 3.9" rotation="0 15 0"
+       circles-interactive-object="type:highlight;" soil-selected-effect soilCount="0" circles-pickup-networked
+       circles-label="text:Soil; lookAtCamera:false; visible:true; offset: 0 0.7 0;"  soilCount="0" ></a-entity>
 
+       <a-entity id="martianSoilBag"  gltf-model="#soilSackModel" scale="0.4 0.4 0.4"  position="13.9 0.5 5.2" rotation="0  0 0"
+      
+       circles-artefact="
+       inspectPosition:      0.0 0.0 0;
+       inspectScale:         0.3 0.3 0.3;
+       inspectRotation:      0 0 0;
+       textRotationY:        -90;
+       description_offset:   0 0.5 0;
+       description_on:       true;
+       desc_arrow_position:  down;
+       label_text:           Martian Soil;
+       label_offset:         0 0 0;
+       label_on:             true;
+       label_arrow_position: down;
+       title: Martian Soil;
+       description:         
+       Martian soil is harmful for plants and people due to high concentrations of perchlorate"></a-entity>
+       
+    </a-entity>
+    
+    <a-entity id="spaceShuttle"gltf-model="#spaceShuttleModel" scale="0.75 0.75 0.75" position="20 0 20">
+    <a-entity id="rocketInterior" gltf-model="#rocketInteriorModel" rotation="0 180 0"  position="0 5.3 0" scale="0.006 0.006 0.006"></a-entity>
+    <a-entity id="books" gltf-model="#booksModel" position="0 5.3 3" scale="0.5 0.5 0.5" circles-interactive-object="type:highlight;"  
+    circles-pickup-networked 
+    circles-artefact="
+        inspectPosition:      0.0 0.0 0.4;
+        inspectScale:         1 1 1;
+        inspectRotation:      0 0 0;
+        textRotationY:        0;
+        description_offset:   0 0.5 0;
+        description_on:       true;
+        desc_arrow_position:  down;
+        label_on:             false;
+        title: Terraforming;
+        description:         
+        Terraforming is an approach that has been considered for habitation on Mars. One approach is the usage of a thin layer of silica Aerogel. Theoretically the result  would cause a green house effect that would warm Mars, or portions of it, within a decade.;
+        audio:                #some-snd; 
+        volume:               0.4;">
+    
+    
+    ></a-entity>
     </a-entity>
 
-       <a-sphere color="#676767" position="-10 1.25 -2" radius="5.25"></a-sphere>
-      
+   <a-entity circles-checkpoint circles-spawnpoint position="0 0 32" ></a-entity>
+
+ 
+  
+
        <a-entity id="soil" geometry="primitive:box; depth:2; height:0.5; width:2"   material="color:red"  position="-1 0.5 0" rotation="0 45 0" circles-pickup-object="animate:false;" circles-interactive-object="type:highlight;" circles-pickup-networked></a-entity>
         <!-- We use a box and not a plane because the hitbox of the plane is not 100% tight around it. This caused an issue where the objects would not hit the floor, but rather would just float. -->
-       <a-entity id ="marsControlPanel" geometry="primitive=box; depth 3; height 3; width 4" material="color:blue" position="0 0 0" >
-        <a-entity id="soilOptionDial"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)" position=" 1 0 0"></a-entity>
-       <a-entity id="CO2DialOption"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"  position="-1 0 0"></a-entity>
+       <a-entity id ="marsControlPanel" geometry="primitive:box; depth:2; height:1; width:3" material="color:blue" position="0 0.5 0" >
+        <a-entity id="soilOptionDial"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(000, 207, 240)" position=" 0.5 0.7 0"></a-entity>
+       <a-entity id="CO2DialOption"  geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"  position="0.8 0.7 0"></a-entity>
+       
+       <a-entity id="insulationOption" position="0 0.6 0">
+        <a-entity id=" Silica Aerogel Layer"  geometry="primitive:box; depth:0.1; height:0.1; width:0.4" material="color:rgb(255, 207, 240)"  position="-0.6 0 0.6" 
+        circles-buttons circles-interactive-object circles-label="text:Silica Aerogel Layer; lookAtCamera:false; visible:true; offset: 0 0.5 0;"
+        info-panel-effect="visible:false; answer:correct; title:Silica Aerogel Layer; value:
+        Terraforming is an approach that has been considered for habitation on Mars. 
+        One approach is the usage of a thin layer of silica Aerogel. 
+        Theoretically the result  would cause a green house effect that would warm Mars, or portions of it, within a decade.
+
+         "
+        ></a-entity>
+
+        <a-entity id="BeesWax "  geometry="primitive:box; depth:0.1; height:0.1; width:0.4" material="color:rgb(0, 207, 255)"  position="0 0 0.6"
+        circles-buttons circles-interactive-object circles-label="text:BeesWax Coated Structure ; lookAtCamera:false;visible:true; offset: 0 0.5 0;" info-panel-effect="visible:false; answer:wrong; title:BeesWax Coated Structure; value:
+        Beeswax has not been considered as a protection for mars habitatation.
+         On the flip side,  MIT is currently investigating  beeswax as 
+          rocket propellants(fuel) for low earth orbit. "
+        ></a-entity>
 
 
+       <a-entity id="Solar Shade"  geometry="primitive:box; depth:0.1; height:0.1; width:0.4" material="color:rgb(0, 255, 0)"  position="0.6 0 0.6"circles-buttons
+       circles-buttons circles-interactive-object circles-label="text:Solar Shade  ; lookAtCamera:false;visible: true; offset: 0 0.5 0;" info-panel-effect="visible:false; answer:wrong; title:Solar Shade at Sun–Venus L1 Lagrangian point; 
+       value:Solarshade is a method that is being considered to terraform Venus. 
+       A solar shade at Sun–Venus L1 Lagrangian point would block solar wind, reduce the radiation and cool the planet. 
+       It could also lead to the reduction of atmospheric pressure. "
+       ></a-entity>
+       </a-entity>
+    
 
 
        </a-entity>
 
+
+       <!--<a-entity id="checkpoint_Scientist" circles-checkpoint position="20 3.5 10.65" limit-position-effect="limitPosition:true"></a-entity>-->
+      <a-entity id="checkpoint_Scientist" circles-checkpoint position="20 3.5 20" limit-position-effect="limitPosition:false"></a-entity>
+       <a-entity id="checkpoint_MechAndAstro" circles-checkpoint position="0 0 3"></a-entity>
+
+
+
+
+       
+    <!--Buttons-->
+
+    <a-entity id="all-buttons" position="-0.914 0 30">
+
+      <!-- Astronut button-->
+      <a-entity id="asB" class="roleButton">
+        <a-entity class="button interactive" destroy-buttons="firstId: scB; secondId: mcB" position="0.05 0.6 -2.2"
+          hover="panelId: Aintro" showpanel="panelId: astronutPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(137, 207, 240)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(0, 0, 150); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(137, 207, 240); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:0.05 0.58 -2.2; to:0.05 0.6 -2.2; startEvents:click; dur:300"
+          shadow circles-button circles-sendpoint="target:#checkpoint_MechAndAstro;"></a-entity>
+        <a-entity position="0.05 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <!-- Roles intro on hover-->
+        <a-entity id="Aintro" position="0 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Astronut Role!
+            ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+
+      <!-- Scientist button-->
+
+      <a-entity id="scB" class="roleButton">
+        <a-entity class="button interactive" destroy-buttons="firstId: asB; secondId: mcB" position="1.8 0.6 -2.2"
+          hover="panelId: Sintro" showpanel="panelId: scientistPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(255,0,0)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(128,0,0); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(255,0,0); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:1.8 0.58 -2.2; to:1.8 0.6 -2.2; startEvents:click; dur:300"
+          shadow circles-button circles-sendpoint="target:#checkpoint_Scientist;"> </a-entity>
+        <a-entity position="1.8 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <a-entity id="Sintro" position="1.8 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Scientist Role!
+            ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+      <!-- Mechanic button-->
+      <a-entity id="mcB" class="roleButton">
+        <a-entity class="button3 interactive" destroy-buttons="firstId: asB; secondId: scB" position="3.55 0.6 -2.2"
+          hover="panelId: Mintro" showpanel="panelId: mechanicPanel"
+          geometry="primitive:cylinder; radius:0.15; height:0.2;" material="color:rgb(147,112,219)"
+          animation__mouseenter="property:material.color; type:color; to:rgb(138,43,226); startEvents:mouseenter; dur:200"
+          animation__mouseleave="property:material.color; type:color; to:rgb(147,112,219); startEvents:mouseleave; dur:200"
+          animation__click="property:position; from:3.55 0.58 -2.2; to:3.55 0.6 -2.2; startEvents:click; dur:300"
+          shadow circles-button circles-sendpoint="target:#checkpoint_MechAndAstro;"> </a-entity>
+          
+        <a-entity position="3.55 0.3 -2.2" geometry="primitive:box; width:0.5; depth:0.5; height:0.6;"
+          material="color:rgb(255, 255, 255)" shadow></a-entity>
+
+        <a-entity id="Mintro" position="3.6 1.14 -2" visible="true">
+          <a-entity geometry="primitive: plane; width: 1; height: 0.3" material="color: black" opacity="0.9"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Mechanic Role!
+              ; align: center; color: white; width:1.2; wrapCount:20;"></a-entity>
+        </a-entity>
+
+      </a-entity>
+
+      <!-- Astronut pannel-->
+      <a-entity id="asB">
+        <a-entity id="astronutPanel" position="-0.119 1.8 -2" visible="false">
+          <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+          <a-entity class="interactive close-button" position="0.874 0.37 0"
+            geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+            text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+          <a-entity class="panel-text" position="0 -0.025 0.107" text="value:Our Captain! Nice to have you on board. Head to the Blue Panel and Complete your tasks.
+      ; align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+        </a-entity>
+      </a-entity>
+
+
+
+      <!-- Scientist pannel-->
+
+      <a-entity id="scientistPanel" position="1.9 1.8 -2" visible="false">
+        <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+        <a-entity class="interactive close-button" position="0.874 0.37 0"
+          geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+        <a-entity class="panel-text" position="0 -0.025 0.107"
+          text="value:Our genius scientist! Nice to see you here. Head to the Orange Panel and Complete your tasks!; align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+      </a-entity>
+
+
+      <!-- Mechanic pannel-->
+      <a-entity id="mechanicPanel" position="3.93 1.8 -2" visible="false">
+        <a-entity geometry="primitive: plane; width: 2; height: 1" material="color: white" opacity="0.9"></a-entity>
+        <a-entity class="interactive close-button" position="0.874 0.37 0"
+          geometry="primitive:plane; width:0.2; height:0.2" material="color:red; opacity:0.8"
+          text="value: X; color:white; align:center; width:3; height:0.3;"></a-entity>
+        <a-entity class="panel-text" position="0 -0.025 0.107" text="value: Our trusty mechanic! Nice to see you here. Head to the Purple panel and Complete your tasks!;
+       align: center; color: black; width:1.6; wrapCount:20;"></a-entity>
+      </a-entity>
+
+
+    </a-entity>
+
     </a-scene>
     <!-- Circles' end scripts [REQUIRED] -->
     <circles-end-scripts/>
+    <script>
+    
+      const socket = io();
+  
+      const playerId = socket.id;
+  
+      const buttons = document.querySelectorAll('.roleButton');
+  
+      //loop through the buttons and add a click event to each
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const buttonId = button.id;
+          socket.emit('buttonClicked', buttonId);
+          console.log(`Button ${buttonId} clicked`);
+        });
+      });
+  
+      socket.on('destroyButton', (buttonId) => {
+        console.log(`Destroying button ${buttonId}`);
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.parentNode.removeChild(button);
+        }
+      });
+  
+  
+    </script>
   </body>
 </html>
 
