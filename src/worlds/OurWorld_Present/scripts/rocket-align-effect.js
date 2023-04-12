@@ -1,7 +1,6 @@
-//if user gets close to object display identifiers
-// if user touches a button, spark a button press animation and and start said effect
+
 AFRAME.registerComponent('rocket-align-effect', {
-  
+   
     update: function ()  {
         const CONTEXT_AF = this;
         const scene      = document.querySelector('a-scene');
@@ -9,18 +8,18 @@ AFRAME.registerComponent('rocket-align-effect', {
         CONTEXT_AF.isSpinning = false;
         CONTEXT_AF.toDoListItem     = document.querySelector('#astronautTask');
         CONTEXT_AF.gameController = document.querySelector('#gameController');
+        const portal = document.querySelector('#portal');
+        const socket = io();
         console.log("rocketSpin");
 
      
-      
         let temp=25;
         //unfortunately due to time constraint decided to harde code this one
         let role="astronaut";
         var interval;      
        
         this.el.addEventListener('click', function () {
-         
-
+        
             if(!CONTEXT_AF.isSpinning){
                 
                // interval=setInterval(spinning(CONTEXT_AF), 50);
@@ -31,10 +30,6 @@ AFRAME.registerComponent('rocket-align-effect', {
                     CONTEXT_AF.isSpinning = true;
                 }
             
-  
-
-        
-        
         
         else if(CONTEXT_AF.isSpinning){
             console.log("We are spinning, let's stop");   
@@ -47,46 +42,30 @@ if(CONTEXT_AF.isSpinning==false)
 
 { 
 
-
    let rocketAngles3=this.getAttribute("rocketAngle"); 
    if((0<rocketAngles3 && rocketAngles3<25) || (335<= rocketAngles3 && rocketAngles3<=360)){
 
     console.log(rocketAngles3);
        console.log("you did it");
-       //CONTEXT_AF.toDoListItem.setAttribute("text",  {value: "Completed: A̶l̶i̶g̶n̶ ̶S̶h̶u̶t̶t̶l̶e̶ ̶f̶o̶r̶ ̶L̶a̶n̶d̶i̶n̶g̶"});
-     
-       console.log(role);
+       socket.emit('win-messageA', 'Spacecraft is aligned perfectly! Please head to the exit.')
+       portal.setAttribute('visible', true);
        
-       CONTEXT_AF.gameController.emit('taskProgression', role);
-
-
+       /* TRIAL
+       console.log(role);
+       CONTEXT_AF.gameController.emit('taskProgression', role); */
    }
-
-
-
-
-
-
     }
-
-
-
 })
-    
+
         
         function spinning(thisp){
-           
-           
            
             
             interval =  setInterval(function(){
 
                 let rocketRotation= CONTEXT_AF.rocket.getAttribute("rotation");
                 let rotationAngle2= thisp.el.getAttribute('rocketAngle');
-                
-
-
-
+            
                 console.log("On click the angle is" +  rotationAngle2);
                 rotationAngle2=Number(rotationAngle2)+5;
                 if(rotationAngle2%360==0){
@@ -100,30 +79,14 @@ if(CONTEXT_AF.isSpinning==false)
                 let newAngle=("0 0 " + rotationAngle2);
                 thisp.el.setAttribute("rocketAngle", rotationAngle2);
                 CONTEXT_AF.rocket.setAttribute("rotation", newAngle);
-
-
-
-
             }, 1);
-
-
-
-
-            
 
         
         }
-   
-        
-
-    }   
-
-    
-    
  
 
-
-
+    } 
 }
 
 )
+

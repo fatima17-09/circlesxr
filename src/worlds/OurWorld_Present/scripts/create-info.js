@@ -22,22 +22,23 @@ AFRAME.registerComponent('create-info', {
         CONTEXT_AF.text.setAttribute('text', 'value', CONTEXT_AF.data.value);
         CONTEXT_AF.text.setAttribute('text', 'color:black');
         CONTEXT_AF.text.setAttribute('text', 'font:roboto');
-        CONTEXT_AF.text.setAttribute('text', 'width:2');
+        CONTEXT_AF.text.setAttribute('text', 'width:3');
         CONTEXT_AF.text.setAttribute('text', 'anchor:center');
         CONTEXT_AF.text.setAttribute('text', 'basline:100');
-        CONTEXT_AF.text.setAttribute('text', 'wrapCount:20');
+        CONTEXT_AF.text.setAttribute('text', 'wrapCount:50');
         CONTEXT_AF.text.setAttribute('position', CONTEXT_AF.data.position);
         CONTEXT_AF.text.setAttribute('geometry', 'primitive', 'plane');
-        CONTEXT_AF.text.setAttribute('geometry', 'width: 2.5');
+        CONTEXT_AF.text.setAttribute('geometry', 'width: 3');
+        CONTEXT_AF.text.setAttribute('geometry', 'height: 1.4');
         CONTEXT_AF.text.setAttribute('material', 'color', 'white');
-        //CONTEXT_AF.text.setAttribute('position', '4.5 1 -4');
       
+  
         sceneEl.appendChild(CONTEXT_AF.text);
   
         const fullScene = document.querySelector('a-scene');
         if (fullScene.children.length > 1){
           console.log('Destroy Info'); 
-          setTimeout(() => {CONTEXT_AF.text.parentNode.removeChild(CONTEXT_AF.text)}, 10000)}
+          setTimeout(() => {CONTEXT_AF.text.parentNode.removeChild(CONTEXT_AF.text)}, 50000)}
   
       })
   

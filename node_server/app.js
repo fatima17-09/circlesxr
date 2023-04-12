@@ -272,6 +272,9 @@ io.on("connection", socket => {
 
   //OurWorld_Present
   let playerId = socket.id
+  // Store the player positions in an object
+const playerPositions = {};
+
   console.log(`${playerId} A user connected!`);
 
   socket.on('buttonClicked', (buttonId) => {
@@ -282,7 +285,26 @@ io.on("connection", socket => {
     console.log(`Button ${buttonId} clicked by ${socket.id}`);
     socket.broadcast.emit('destroyButton', buttonId);
   });
-//
+
+  socket.on('win-messageA', (message)=> {
+    io.emit('win-screenA', message);
+  });
+  socket.on('win-messageS', (message)=> {
+    io.emit('win-screenS', message);
+  });
+  socket.on('win-messageM', (message)=> {
+    io.emit('win-screenM', message);
+  });
+
+
+
+  /*
+  socket.on('taskProgression', () => {
+    console.log("I selected and will return: ");
+
+  }); */
+
+
 
   socket.on("disconnect", () => {
     console.log('disconnected: ', socket.id, curRoom);
@@ -299,29 +321,6 @@ io.on("connection", socket => {
       }
     }
   });
-
-/*
-  socket.on('taskProgression', () => {
-    console.log("I selected and will return: ");
-
-  });*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -342,38 +341,38 @@ io.on("connection", socket => {
     onevent.call(this, packet);      // additional call to catch-all
   };
 
-  //listen for all events and forward to all other clients
-  socket.on("*", function(event, data) {
-    //console.log('socket event fired: ' + event);
+ //listen for all events and forward to all other clients
+ socket.on("*", function(event, data) {
+  //console.log('socket event fired: ' + event);
 
-    //ignore reserved event names
-    if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
-          event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
-      return; //exit
-    }
+  //ignore reserved event names
+  if (  event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+        event === CIRCLES.EVENTS.REQUEST_DATA_SYNC ||
+        event === CIRCLES.EVENTS.RECEIVE_DATA_SYNC    ) {
+    return; //exit
+  }
 
-    if (data.room) {
-      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
-      socket.to(data.room).emit(event, data);
-    }
-  });
+  if (data.room) {
+    socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+    socket.to(data.room).emit(event, data);
+  }
+});
 
-  //this is a request to ask others for their world state for syncing purposes
-  socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function (data) {
-    if (data.room) {
-      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
-      socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
-    }
-  });
+//this is a request to ask others for their world state for syncing purposes
+socket.on(CIRCLES.EVENTS.REQUEST_DATA_SYNC, function (data) {
+  if (data.room) {
+    socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+    socket.to(data.room).emit(CIRCLES.EVENTS.REQUEST_DATA_SYNC, data);
+  }
+});
 
-  //this is an event to send world data for syncing to others
-  socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function (data) {
-    if (data.room) {
-      socket.join(data.room); //hacky solution for janus adapter which doesn't set room
-      socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
-    }
-  });
+//this is an event to send world data for syncing to others
+socket.on(CIRCLES.EVENTS.SEND_DATA_SYNC, function (data) {
+  if (data.room) {
+    socket.join(data.room); //hacky solution for janus adapter which doesn't set room
+    socket.to(data.room).emit(CIRCLES.EVENTS.RECEIVE_DATA_SYNC, data);
+  }
+});
 });
 
 //let's create a research namespace.
